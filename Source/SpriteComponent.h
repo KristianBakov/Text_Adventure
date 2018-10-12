@@ -6,11 +6,9 @@
 #define BASICREB0RN_SPRITECOMPONENT_H
 
 
-
 class SpriteComponent {
 
 };
-
 
 
 #endif //BASICREB0RN_SPRITECOMPONENT_H
