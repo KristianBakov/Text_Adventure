@@ -3,6 +3,8 @@
 //
 
 #include "MyGame.h"
+#include <Engine\Renderer.h>
+#include "GameObject.h"
 #include <Engine/DebugPrinter.h>
 #include <Engine/Input.h>
 #include <Engine/InputEvents.h>
@@ -30,5 +32,7 @@ void MyGame::update(const ASGE::GameTime &us)
 
 void MyGame::render(const ASGE::GameTime &us)
 {
+  renderer->renderText("Choose mode and press play to start",
+                       200, 350, 1.5, ASGE::COLOURS::NAVAJOWHITE);
   return;
 }
