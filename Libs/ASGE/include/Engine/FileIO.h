@@ -7,8 +7,8 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include <PhysFS/PhysFS.hpp>
 
+struct PHYSFS_File;
 namespace ASGE
 {
     /**
@@ -17,7 +17,7 @@ namespace ASGE
     */
 	namespace FILEIO
 	{
-		using namespace PhysFS;
+		//
 
 		/**
 		* @brief buffer for raw data.
@@ -68,7 +68,12 @@ namespace ASGE
 		struct File
 		{
 		public:
-			using IOMode = PhysFS::IOMode;
+			enum class IOMode
+			{
+				READ,
+				APPEND,
+				WRITE
+			};
 
 		public:
 			File() = default;
@@ -82,7 +87,7 @@ namespace ASGE
 			* @param mode The IO mode required.
 			* @return True if successful.
 			*/
-			bool open(const std::string& filename, IOMode mode = IOMode::READ);
+			bool open(const std::string& filename, IOMode mode);
 
 			/**
 			* Closes the file (if open).
@@ -119,7 +124,6 @@ namespace ASGE
 
 		private:
 			PHYSFS_File* handle = nullptr; /**< The low-level handle to the file. */
-
 		};
 
 	}

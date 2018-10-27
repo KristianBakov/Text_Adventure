@@ -14,6 +14,7 @@
 class MyGame : public ASGE::OGLGame
 {
 public:
+    MyGame();
     virtual ~MyGame();
     bool init() override;
     void update(const ASGE::GameTime& us) override;
@@ -23,8 +24,10 @@ private:
     void clickHandler(const ASGE::SharedEventData data);
     void setupResolution();
 
-    int  key_callback_id = -1;	        /**< Key Input Callback ID. */
+    int key_callback_id = -1;	        /**< Key Input Callback ID. */
     int  mouse_callback_id = -1;        /**< Mouse Input Callback ID. */
+
+    rect mouse_cursor;
 };
 
 
