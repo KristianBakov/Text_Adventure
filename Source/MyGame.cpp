@@ -43,8 +43,8 @@ return false;
 
 void MyGame::setupResolution()
 {
-  game_width = 1920;
-  game_height = 1080;
+  game_width = 1024;
+  game_height = 768;
 }
 
 void MyGame::keyHandler(const ASGE::SharedEventData data)
@@ -56,11 +56,10 @@ void MyGame::clickHandler(const ASGE::SharedEventData data) {
   auto click = static_cast<const ASGE::ClickEvent *>(data.get());
   double x_pos, y_pos;
   inputs->getCursorPos(x_pos, y_pos);
-  mouse_cursor.x = x_pos;
-  mouse_cursor.y = y_pos;
+  mouse_cursor.x = static_cast<float>(x_pos);
+  mouse_cursor.y = static_cast<float>(y_pos);
 
-  if (click->button == 0 && click->action == 1 &&
-      mouse_cursor.isInside(0,game_width))
+  if (click->button == 0 && click->action == 1)
   {
     signalExit();
   }
