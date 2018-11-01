@@ -3,6 +3,7 @@
 //
 
 #include "MyGame.h"
+#include "Rooms.h"
 #include <Engine\Renderer.h>
 #include "GameObject.h"
 #include <Engine/DebugPrinter.h>
@@ -28,6 +29,7 @@ return false;
   toggleFPS();
   renderer->setWindowTitle("This Game I Madez");
   renderer->setClearColour(ASGE::COLOURS::BLACK);
+  initializeRooms();
 
   // input handling functions
   inputs->use_threads = false;
@@ -45,6 +47,11 @@ void MyGame::setupResolution()
 {
   game_width = 1024;
   game_height = 768;
+}
+
+void MyGame::initializeRooms()
+{
+  room[57].room(true,false,true,true,false,false,"Path by iron door","Spooky",57);
 }
 
 void MyGame::keyHandler(const ASGE::SharedEventData data)
@@ -72,7 +79,7 @@ void MyGame::update(const ASGE::GameTime &us)
 
 void MyGame::render(const ASGE::GameTime &us)
 {
-  renderer->renderText("Choose mode and press play to start",
-                       200, 350, 1.5, ASGE::COLOURS::NAVAJOWHITE);
+   renderer->renderText("Choose mode and press play to start",
+                           200, 350, 1.5, ASGE::COLOURS::NAVAJOWHITE);
   return;
 }

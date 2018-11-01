@@ -10,6 +10,7 @@
 
 #include "GameObject.h"
 #include "Rect.h"
+#include "Rooms.h"
 
 class MyGame : public ASGE::OGLGame
 {
@@ -20,12 +21,18 @@ public:
     void update(const ASGE::GameTime& us) override;
     void render(const ASGE::GameTime& us) override;
 private:
+
+    int player_location = 57;
+
+    void initializeRooms();
     void keyHandler(const ASGE::SharedEventData data);
     void clickHandler(const ASGE::SharedEventData data);
     void setupResolution();
 
     int key_callback_id = -1;	        /**< Key Input Callback ID. */
     int  mouse_callback_id = -1;        /**< Mouse Input Callback ID. */
+
+    Rooms room[64];
 
     rect mouse_cursor;
 };
