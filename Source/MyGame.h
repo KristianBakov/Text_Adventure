@@ -16,28 +16,37 @@
 class MyGame : public ASGE::OGLGame
 {
 public:
-    MyGame();
-    virtual ~MyGame();
-    bool init() override;
-    void update(const ASGE::GameTime& us) override;
-    void render(const ASGE::GameTime& us) override;
+	MyGame();
+	virtual ~MyGame();
+	bool init() override;
+	void update(const ASGE::GameTime& us) override;
+	void render(const ASGE::GameTime& us) override;
 private:
 
-    int current_room = 57;
+    const int INPUT_LENGHT = 100;
+	int current_room = 57;
 
-    void initializeRooms();
-    void keyHandler(const ASGE::SharedEventData data);
-    void clickHandler(const ASGE::SharedEventData data);
-    void setupResolution();
+	void initializeRooms();
+	void keyHandler(const ASGE::SharedEventData data);
+	void clickHandler(const ASGE::SharedEventData data);
+	void setupResolution();
+	void inputText(const ASGE::KeyEvent *key);
 
-    int key_callback_id = -1;	        /**< Key Input Callback ID. */
-    int  mouse_callback_id = -1;        /**< Mouse Input Callback ID. */
+	int key_callback_id = -1;	        /**< Key Input Callback ID. */
+	int  mouse_callback_id = -1;        /**< Mouse Input Callback ID. */
 
-    Rooms room[63];
-    char str[100];
-    std::string exits;
+	Rooms room[63];
+	std::string input;
+	std::string current_verb;
+    std::size_t found_verb = 0;
+    std::size_t found_noun = 0;
+	std::string verb[26] = {"","HELP","INVENTORY","GO","N","S","W","E","U","D","GET",
+                         "TAKE","EXAMINE","OPEN","READ","SAY","DIG","SWING","CLIMB",
+                         "LIGHT","UNLIGHT","SPRAY","USE","UNLOCK","LEAVE","SCORE"};
+	std::string noun;
+	std::string exits;
 
-    rect mouse_cursor;
+	rect mouse_cursor;
 };
 
 
