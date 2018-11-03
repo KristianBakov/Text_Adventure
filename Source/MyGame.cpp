@@ -54,7 +54,7 @@ void MyGame::setupResolution()
 void MyGame::initializeRooms()
 {
 	room[57].room(true, false, true, true, false, false, "Path by iron door", "Spooky");
-	room[57].room(true, false, true, true, false, false, "Path by railings", "more spook");
+	room[58].room(true, false, true, true, false, false, "Path by railings", "more spook");
 }
 
 
@@ -62,6 +62,16 @@ void MyGame::keyHandler(const ASGE::SharedEventData data)
 {
 	auto key = static_cast<const ASGE::KeyEvent *>(data.get());
 	inputText(key);
+	if (key->key == ASGE::KEYS::KEY_ENTER &&key->action == ASGE::KEYS::KEY_PRESSED)
+	{
+		input_copy.assign(input);
+		input.clear();
+		enter_pressed = true;
+	}
+	if (key->key == ASGE::KEYS::KEY_ENTER &&key->action == ASGE::KEYS::KEY_RELEASED)
+	{
+		enter_pressed = false;
+	}
 }
 
 void MyGame::clickHandler(const ASGE::SharedEventData data)
@@ -186,13 +196,19 @@ void MyGame::inputText(const ASGE::KeyEvent *key) {
 	{
 		input.push_back(' ');
 	}
-	if(key->key == ASGE::KEYS::KEY_ENTER &&key->action == ASGE::KEYS::KEY_PRESSED)
+}
+void MyGame::checkNoun(int v)
+{
+	if (v == 0)
 	{
-		input.push_back('\n');
+		//check why it doesn't want to assign to string feedback
+	feedback.assign("test");
 	}
 }
 
 void MyGame::update(const ASGE::GameTime &us) {
+	renderer->renderText(room[current_room].getName(),
+						 20, 210, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	/*if (the room has been updated)
 	{
 	if (the direction is set to true)
@@ -208,11 +224,30 @@ void MyGame::update(const ASGE::GameTime &us) {
 						 20, 270, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	//renderer->renderText(verb[1],
 	//					 20, 300, 1.0, ASGE::COLOURS::LIGHTGREEN);
-	found_verb = input.find_first_of(" ");
-	if (found_verb > 0) {
-		current_verb = input.substr(0, found_verb);
-		renderer->renderText(current_verb,
-							 20, 300, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	found_space = input_copy.find_first_of(' ');
+
+	if (found_space > 0 && enter_pressed) {
+		current_verb = input_copy.substr(0, found_space);
+		current_noun = input_copy.substr(found_space + 1);
+	}
+	renderer->renderText(input_copy,
+						 20, 300, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	renderer->renderText(current_verb,
+						 20, 330, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	renderer->renderText(current_noun,
+						 20, 360, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	renderer->renderText(feedback,
+						 20, 390, 1.0, ASGE::COLOURS::LIGHTGREEN);
+
+
+	for (int i = 0; i < 26; i++) {
+		if (current_verb == verb[i]) {
+			checkNoun(i);
+		}
+		else {
+			//call a function 'error msg'
+			feedback.clear();
+		}
 	}
 }
 
@@ -222,8 +257,6 @@ void MyGame::render(const ASGE::GameTime &us)
 		20, 150, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText("Your Location",
 		20, 180, 1.0, ASGE::COLOURS::LIGHTGREEN);
-	renderer->renderText(room[current_room].getName(),
-		20, 210, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText("Exits:",
 		20, 240, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	return;

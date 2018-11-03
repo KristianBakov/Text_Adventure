@@ -31,15 +31,19 @@ private:
 	void clickHandler(const ASGE::SharedEventData data);
 	void setupResolution();
 	void inputText(const ASGE::KeyEvent *key);
-
+    void checkNoun(int v);
 	int key_callback_id = -1;	        /**< Key Input Callback ID. */
 	int  mouse_callback_id = -1;        /**< Mouse Input Callback ID. */
+
+	bool enter_pressed = false;
 
 	Rooms room[63];
 	std::string input;
 	std::string current_verb;
-    std::size_t found_verb = 0;
-    std::size_t found_noun = 0;
+	std::string current_noun;
+	std::string input_copy;
+	std::string feedback;
+    std::size_t found_space = 0;
 	std::string verb[26] = {"","HELP","INVENTORY","GO","N","S","W","E","U","D","GET",
                          "TAKE","EXAMINE","OPEN","READ","SAY","DIG","SWING","CLIMB",
                          "LIGHT","UNLIGHT","SPRAY","USE","UNLOCK","LEAVE","SCORE"};
