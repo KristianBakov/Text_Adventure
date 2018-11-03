@@ -27,7 +27,7 @@ bool MyGame::init()
 return false;
 }
   toggleFPS();
-  renderer->setWindowTitle("This Game I Madez");
+  renderer->setWindowTitle("The Haunted House");
   renderer->setClearColour(ASGE::COLOURS::BLACK);
   initializeRooms();
 
@@ -51,8 +51,10 @@ void MyGame::setupResolution()
 
 void MyGame::initializeRooms()
 {
-  room[57].room(true,false,true,true,false,false,"Path by iron door","Spooky",57);
+  room[57].room(true,false,true,true,false,false,"Path by iron door","Spooky");
+  room[57].room(true,false,true,true,false,false,"Path by railings","more spook");
 }
+
 
 void MyGame::keyHandler(const ASGE::SharedEventData data)
 {
@@ -73,13 +75,29 @@ void MyGame::clickHandler(const ASGE::SharedEventData data) {
 }
 void MyGame::update(const ASGE::GameTime &us)
 {
-   //do some stuff / what's going on here?
+  /*if (the room has been updated)
+  {
+   if (the direction is set to true)
+   {
+    exits.push_back(add char for each true direction + ",");
+    }
+    else
+    {
+      exits.push_back(add "");
+    }
+   }*/
   return;
 }
 
 void MyGame::render(const ASGE::GameTime &us)
 {
-   renderer->renderText("Choose mode and press play to start",
-                           200, 350, 1.5, ASGE::COLOURS::NAVAJOWHITE);
+   renderer->renderText("The Haunted House Remastered",
+                           20, 150, 1.0, ASGE::COLOURS::LIGHTGREEN);
+   renderer->renderText("Your Location",
+                         20, 180, 1.0, ASGE::COLOURS::LIGHTGREEN);
+   renderer->renderText(room[current_room].getName(),
+                         20, 210, 1.0, ASGE::COLOURS::LIGHTGREEN);
+   renderer->renderText("Exits:",
+                         20, 240, 1.0, ASGE::COLOURS::LIGHTGREEN);
   return;
 }
