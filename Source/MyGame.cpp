@@ -77,6 +77,7 @@ void MyGame::goSouth()
 
 void MyGame::initializeRooms()
 {
+	room[49].room(true, false, true, true, false, false, "Path by iron door", "Spooky");
 	room[57].room(true, false, true, true, false, false, "Path by iron door", "Spooky");
 	room[58].room(true, false, true, true, false, false, "Path by railings", "more spook");
 }
@@ -220,6 +221,10 @@ void MyGame::inputText(const ASGE::KeyEvent *key) {
 	{
 		input.push_back(' ');
 	}
+    if(key->key == ASGE::KEYS::KEY_BACKSPACE &&key->action == ASGE::KEYS::KEY_PRESSED && input.length() > 0)
+    {
+        input.pop_back();
+    }
 }
 void MyGame::checkNoun(int v)
 {
@@ -286,7 +291,7 @@ void MyGame::update(const ASGE::GameTime &us) {
 	renderer->renderText(feedback,
 						 20, 390, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(exits,
-						 20, 420, 1.0, ASGE::COLOURS::LIGHTGREEN);
+                         100, 240, 1.0, ASGE::COLOURS::LIGHTGREEN);
 
 
 	for (int i = 0; i < 26; i++) {
