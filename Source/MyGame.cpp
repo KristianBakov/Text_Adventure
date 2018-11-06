@@ -50,6 +50,30 @@ void MyGame::setupResolution()
 	game_width = 1024;
 	game_height = 768;
 }
+void MyGame::goEast()
+{
+	current_room += 1;
+	input_copy.clear();
+	room_updated = true;
+}
+void MyGame::goWest()
+{
+	current_room -= 1;
+	input_copy.clear();
+	room_updated = true;
+}
+void MyGame::goNorth()
+{
+	current_room += ROW;
+	input_copy.clear();
+	room_updated = true;
+}
+void MyGame::goSouth()
+{
+	current_room -= ROW;
+	input_copy.clear();
+	room_updated = true;
+}
 
 void MyGame::initializeRooms()
 {
@@ -201,25 +225,48 @@ void MyGame::checkNoun(int v)
 {
 	if (v == 0)
 	{
-		//check why it doesn't want to assign to string feedback
-	feedback.assign("test");
+	feedback.assign("WHAT WILL YOU DO NEXT?");
+	}
+	if (((v == 3 && current_noun == noun[22]) || v == 7) && room[current_room].getEast())
+    {
+		goEast();
+    }
+	if (((v == 3 && current_noun == noun[21]) || v == 6) && room[current_room].getWest())
+	{
+		goWest();
+	}
+	if (((v == 3 && current_noun == noun[20]) || v == 5) && room[current_room].getSouth())
+	{
+		goSouth();
+	}
+	if (((v == 3 && current_noun == noun[19]) || v == 4) && room[current_room].getNorth())
+	{
+		goNorth();
 	}
 }
 
 void MyGame::update(const ASGE::GameTime &us) {
 	renderer->renderText(room[current_room].getName(),
 						 20, 210, 1.0, ASGE::COLOURS::LIGHTGREEN);
-	/*if (the room has been updated)
-	{
-	if (the direction is set to true)
-	{
-	exits.push_back(add char for each true direction + ",");
+
+	if (room_updated) {
+		room_updated = false;
+		exits.clear();
+		if (room[current_room].getNorth()) {
+			exits.append("|N| ");
+
+		}
+		if (room[current_room].getSouth()) {
+			exits.append("|S| ");
+		}
+		if (room[current_room].getWest()) {
+			exits.append("|W| ");
+		}
+		if (room[current_room].getEast()) {
+			exits.append("|E| ");
+		}
 	}
-	else
-	{
-	exits.push_back(add "");
-	}
-	}*/
+
 	renderer->renderText(input,
 						 20, 270, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	//renderer->renderText(verb[1],
@@ -238,6 +285,8 @@ void MyGame::update(const ASGE::GameTime &us) {
 						 20, 360, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(feedback,
 						 20, 390, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	renderer->renderText(exits,
+						 20, 420, 1.0, ASGE::COLOURS::LIGHTGREEN);
 
 
 	for (int i = 0; i < 26; i++) {
@@ -246,7 +295,7 @@ void MyGame::update(const ASGE::GameTime &us) {
 		}
 		else {
 			//call a function 'error msg'
-			feedback.clear();
+			//feedback.clear();
 		}
 	}
 }
