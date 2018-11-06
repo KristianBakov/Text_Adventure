@@ -77,6 +77,17 @@ void MyGame::goSouth()
 
 void MyGame::initializeRooms()
 {
+    room[0].room(false,true,true,false,false,false,"Dark corner","Spook");
+    room[1].room(false,false,true,true,false,false,"Overgrown Garden","Spook");
+    room[2].room(false,false,true,true,false,false,"By Woodpile","spook");
+    room[3].room(false,true,true,true,false,false,"Rubbish Yard","sppok");
+    room[4].room(false,false,true,true,false,false,"Weedpatch","");
+    room[5].room(false,false,true,true,false,false,"Forest","");
+    room[6].room(false,true,true,true,false,false,"Thick Forest","");
+    room[7].room(false,true,false,true,false,false,"Blasted Tree","");
+    room[8].room(true,true,false,false,false,false,"Corner of the House","");
+    room[9].room(false,true,true,false,false,false,"Entrance to the Kitchen","");
+    room[10].room(false,false,true,true,false,false,"Kitchen","");
 	room[49].room(true, false, true, true, false, false, "Path by iron door", "Spooky");
 	room[57].room(true, false, true, true, false, false, "Path by iron door", "Spooky");
 	room[58].room(true, false, true, true, false, false, "Path by railings", "more spook");
