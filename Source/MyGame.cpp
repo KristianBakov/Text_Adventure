@@ -64,13 +64,13 @@ void MyGame::goWest()
 }
 void MyGame::goNorth()
 {
-	current_room += ROW;
+	current_room -= ROW;
 	input_copy.clear();
 	room_updated = true;
 }
 void MyGame::goSouth()
 {
-	current_room -= ROW;
+	current_room += ROW;
 	input_copy.clear();
 	room_updated = true;
 }
@@ -88,7 +88,7 @@ void MyGame::initializeRooms()
     room[8].room(true,true,false,false,false,false,"Corner of the House","");
     room[9].room(false,true,true,false,false,false,"Entrance to the Kitchen","");
     room[10].room(false,false,true,true,false,false,"Kitchen","");
-    room[11].room(true,false,true,false,false,false,"Scullery door","");
+    room[11].room(true,false,false,true,false,false,"Scullery door","");
     room[12].room(false,true,true,false,false,false,"Dusty room","");
     room[13].room(false,false,false,true,false,false,"Rear turret room","");
     room[14].room(true,false,true,false,false,false,"Clearing","");
@@ -136,11 +136,11 @@ void MyGame::initializeRooms()
 	room[56].room(true,false,true,false,false,false,"Twisted Railings","");
 	room[57].room(true, false, true, true, false, false, "Path by iron door", "Spooky");
 	room[58].room(false, false, true, true, false, false, "Path by railings", "more spook");
-	room[59].room(false,false,true,true,false,false,"Beneath Tower","");
-	room[60].room(false,false,true,true,false,false,"Debris","");
-	room[61].room(true,false,true,true,false,false,"Fallen Brickwork","");
-	room[62].room(true,false,true,true,false,false,"Stone Arch","");
-	room[63].room(false,false,false,true,false,false,"Crumbling Clifftop","");
+	room[59].room(false, false, true, true, false, false,"Beneath Tower","h");
+	room[60].room(false, false, true, true, false, false,"Debris","h");
+	room[61].room(true, false, true, true, false, false,"Fallen Brickwork","h");
+	room[62].room(true, false, true, true, false, false,"Stone Arch","h");
+	room[63].room(false, false, false, true, false, false,"Crumbling Clifftop","h");
 }
 
 

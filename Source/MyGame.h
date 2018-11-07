@@ -41,7 +41,7 @@ private:
 	bool enter_pressed = false;
 	bool room_updated = 1;
 
-	Rooms room[63];
+	Rooms room[64];
 	std::string input;
 	std::string current_verb;
 	std::string current_noun;
