@@ -7,6 +7,7 @@
 #include <iostream>
 #include "MyGame.h"
 #include "Rooms.h"
+#include "Items.h"
 #include <Engine\Renderer.h>
 #include "GameObject.h"
 #include <Engine/DebugPrinter.h>
@@ -33,6 +34,7 @@ bool MyGame::init()
 	renderer->setWindowTitle("The Haunted House");
 	renderer->setClearColour(ASGE::COLOURS::BLACK);
 	initializeRooms();
+	initializeItems();
 
 	// input handling functions
 	inputs->use_threads = false;
@@ -44,12 +46,13 @@ bool MyGame::init()
 		ASGE::E_MOUSE_CLICK, &MyGame::clickHandler, this);
 	return true;
 }
-
+//set the current resolution. Please do nt change
 void MyGame::setupResolution()
 {
 	game_width = 1024;
 	game_height = 768;
 }
+//update for all 'go' verbs
 void MyGame::goEast()
 {
 	current_room += 1;
@@ -74,7 +77,11 @@ void MyGame::goSouth()
 	input_copy.clear();
 	room_updated = true;
 }
-
+void MyGame::initializeItems()
+{
+    items[16].item(60,noun[16],1); //aerosol
+    items[26].item(13,noun[26],1); //bats
+}
 void MyGame::initializeRooms()
 {
     room[0].room(false,true,true,false,false,false,"Dark corner","Spook");
@@ -89,7 +96,7 @@ void MyGame::initializeRooms()
     room[9].room(false,true,true,false,false,false,"Entrance to the Kitchen","");
     room[10].room(false,false,true,true,false,false,"Kitchen","");
     room[11].room(true,false,false,true,false,false,"Scullery door","");
-    room[12].room(false,true,true,false,false,false,"Dusty room","");
+    room[12].room(false,true,true,false,false,true,"Dusty room","");
     room[13].room(false,false,false,true,false,false,"Rear turret room","");
     room[14].room(true,false,true,false,false,false,"Clearing","");
     room[15].room(true,true,false,true,false,false,"Path","");
@@ -105,7 +112,7 @@ void MyGame::initializeRooms()
     room[25].room(true,true,false,false,false,false,"Gloomy Passage","");
     room[26].room(true,true,true,false,false,false,"Pool of Light","");
     room[27].room(false,false,true,true,false,false,"Vaulted Hall","");
-    room[28].room(false,true,true,true,false,false,"Hall with Locked Door","");
+    room[28].room(false,true,true,true,false,true,"Hall with Locked Door","");
     room[29].room(true,true,false,true,false,false,"Trophy Room","");
     room[30].room(true,true,true,false,false,false,"Cellar","");
     room[31].room(true,true,false,false,false,false,"Cliff Path (North)","");
@@ -113,7 +120,7 @@ void MyGame::initializeRooms()
     room[33].room(true,true,true,false,false,false,"Front Hall","");
     room[34].room(true,true,false,true,false,false,"Sitting Room","");
     room[35].room(false,true,false,false,false,false,"Secret Room","");
-    room[36].room(true,true,false,false,false,true,"Steep Marble Steps","");
+    room[36].room(true,true,false,false,true,true,"Steep Marble Steps","");
     room[37].room(true,false,false,false,false,false,"Dining Room","");
     room[38].room(true,false,false,false,false,false,"Deep Cellar","");
     room[39].room(true,true,false,false,false,false,"Cliff Path (South)","");
@@ -289,10 +296,13 @@ void MyGame::inputText(const ASGE::KeyEvent *key) {
 }
 void MyGame::checkNoun(int v)
 {
+	// v represents verb number from the verb string. It is being checked and matched to the appropriate nouns;
+	// sets default msg for feedback string;
 	if (v == 0)
 	{
-	feedback.assign("WHAT WILL YOU DO NEXT?");
+		feedback.assign("WHAT WILL YOU DO NEXT?");
 	}
+	//Moving around the grid;
 	if (((v == 3 && current_noun == noun[22]) || v == 7) && room[current_room].getEast())
     {
 		goEast();
@@ -309,12 +319,22 @@ void MyGame::checkNoun(int v)
 	{
 		goNorth();
 	}
+	if (v == 10 && current_noun == noun[16])
+	{
+		items[16].setInInventory(true);
+		items[16].setVisibe(false);
+	}
+	if (v == 10 && current_noun == noun[1])
+	{
+
+	}
 }
 
 void MyGame::update(const ASGE::GameTime &us) {
 	renderer->renderText(room[current_room].getName(),
 						 20, 210, 1.0, ASGE::COLOURS::LIGHTGREEN);
 
+	// updates the exits that are displayed when entering a new room
 	if (room_updated) {
 		room_updated = false;
 		exits.clear();
@@ -339,10 +359,13 @@ void MyGame::update(const ASGE::GameTime &us) {
 	//					 20, 300, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	found_space = input_copy.find_first_of(' ');
 
+	//divides player input (when there is a ' ' char) into two substrings
 	if (found_space > 0 && enter_pressed) {
 		current_verb = input_copy.substr(0, found_space);
 		current_noun = input_copy.substr(found_space + 1);
 	}
+	renderer->renderText(exits,
+						 100, 240, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(input_copy,
 						 20, 300, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(current_verb,
@@ -351,8 +374,14 @@ void MyGame::update(const ASGE::GameTime &us) {
 						 20, 360, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(feedback,
 						 20, 390, 1.0, ASGE::COLOURS::LIGHTGREEN);
-	renderer->renderText(exits,
-                         100, 240, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	for (int i=0;i<64;i++) {
+		if (current_room == items[i].getItemRoom() && items[i].isVisible()
+			&& !items[i].isInInventory()) {
+			renderer->renderText(items[i].getName(),
+								 20, 410, 1.0, ASGE::COLOURS::LIGHTGREEN);
+			feedback = "YOU GOT THE " + items[i].getName();
+		}
+	}
 
 
 	for (int i = 0; i < 26; i++) {

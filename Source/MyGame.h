@@ -12,6 +12,7 @@
 #include "GameObject.h"
 #include "Rect.h"
 #include "Rooms.h"
+#include "Items.h"
 
 class MyGame : public ASGE::OGLGame
 {
@@ -26,6 +27,7 @@ private:
 	int current_room = 57;
 
 	void initializeRooms();
+	void initializeItems();
 	void keyHandler(const ASGE::SharedEventData data);
 	void clickHandler(const ASGE::SharedEventData data);
 	void setupResolution();
@@ -39,11 +41,12 @@ private:
 	int  mouse_callback_id = -1;        /**< Mouse Input Callback ID. */
 
 	bool enter_pressed = false;
-	bool room_updated = 1;
+	bool room_updated = true;
 
+	Items items[31];
 	Rooms room[64];
 	std::string input;
-	std::string current_verb;
+	std::string current_verb = "";
 	std::string current_noun;
 	std::string input_copy;
 	std::string feedback;
@@ -57,6 +60,7 @@ private:
                          "KEY","NORTH","SOUTH","WEST","EAST","UP","DOWN","DOOR","BATS",
                          "GHOSTS","DRAWER","DESK","COAT"};
 	std::string exits;
+	std::string test;
 
 	rect mouse_cursor;
 };
