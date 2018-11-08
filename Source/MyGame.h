@@ -26,6 +26,7 @@ private:
     const int ROW = 8;
 	int current_room = 57;
 
+	void setObstacles();
 	void initializeRooms();
 	void initializeItems();
 	void keyHandler(const ASGE::SharedEventData data);

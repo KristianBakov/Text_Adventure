@@ -79,8 +79,12 @@ void MyGame::goSouth()
 }
 void MyGame::initializeItems()
 {
+    items[10].item(25,noun[10],1); // vacuum
+    items[11].item(26,noun[11],1); // batteries
     items[16].item(60,noun[16],1); //aerosol
     items[26].item(13,noun[26],1); //bats
+    items[27].item(52,noun[27],1);//ghosts
+
 }
 void MyGame::initializeRooms()
 {
@@ -353,6 +357,25 @@ void MyGame::update(const ASGE::GameTime &us) {
 		}
 	}
 
+	if (current_room == 13 && items[26].isVisible())
+    {
+		room[13].setWest(false);
+        current_room = 13;
+        feedback = "YOU HAVE BEEN ATTACKED BY BATS! YOU ARE PARALYZED AND CANNOT MOVE.";
+        if (current_verb == verb[21] && items[16].isInInventory())
+		{
+			feedback = "THE BATS UNLEASH A HORRIFYING SCREAM AND FALL ON THE GROUND.";
+        	items[26].setVisibe(false);
+        	room[13].setWest(true);
+		}
+    }
+    if (current_room == 52 && items[27].isVisible())
+    {
+    	room[52].setWest(false);
+    	room[52].setNorth(false);
+        current_room = 52;
+        feedback = "YOU HAVE BEEN ATTACKED BY SPOOKY GHOSTS! YOU ARE PARALYZED AND CANNOT MOVE.";
+    }
 	renderer->renderText(input,
 						 20, 270, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	//renderer->renderText(verb[1],
@@ -388,10 +411,11 @@ void MyGame::update(const ASGE::GameTime &us) {
 		if (current_verb == verb[i]) {
 			checkNoun(i);
 		}
-		else {
+		//else if (!current_verb.empty()){
+		 //   feedback = "ENTER A VALID COMMAND. 'HELP' FOR LIST OF USABLE COMMANDS.";
+		    // might need to do the else in the checkNoun function
 			//call a function 'error msg'
-			//feedback.clear();
-		}
+		//}
 	}
 }
 

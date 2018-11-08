@@ -32,5 +32,9 @@ bool Rooms::getUp() { return up; }
 bool Rooms::getDown() { return down; }
 std::string Rooms::getName() { return name; }
 std::string Rooms::getDesc() { return desc; }
+void Rooms::setEast(bool in) {east = in;}
+void Rooms::setNorth(bool in) {north = in;}
+void Rooms::setSouth(bool in) {south = in;}
+void Rooms::setWest(bool in) {west = in;}
 
 

@@ -21,6 +21,10 @@ public:
     bool getDown();
     std::string getName();
     std::string getDesc();
+    void setNorth(bool in);
+    void setSouth(bool in);
+    void setEast(bool in);
+    void setWest(bool in);
 
 private:
 
