@@ -26,7 +26,6 @@ private:
     const int ROW = 8;
 	int current_room = 57;
 
-	void setObstacles();
 	void initializeRooms();
 	void initializeItems();
 	void keyHandler(const ASGE::SharedEventData data);
@@ -44,15 +43,20 @@ private:
 	bool enter_pressed = false;
 	bool room_updated = true;
 
-	Items items[31];
-	Rooms room[64];
+    static constexpr int ITEM_COUNT = 24;
+	Items items[ITEM_COUNT];
+	static constexpr int ROOM_COUNT = 64;
+	Rooms room[ROOM_COUNT];
 	std::string input;
 	std::string current_verb = "";
 	std::string current_noun;
 	std::string input_copy;
 	std::string feedback;
     std::size_t found_space = 0;
-	std::string verb[26] = {"","HELP","INVENTORY","GO","N","S","W","E","U","D","GET",
+    static constexpr int VERB_COUNT = 26;
+
+
+	std::string verb[VERB_COUNT] = {"","HELP","INVENTORY","GO","N","S","W","E","U","D","GET",
                          "TAKE","EXAMINE","OPEN","READ","SAY","DIG","SWING","CLIMB",
                          "LIGHT","UNLIGHT","SPRAY","USE","UNLOCK","LEAVE","SCORE"};
 	std::string noun[31] = {"","PAINTING","RING","BOOK OF SPELLS","GOBLET","SCROLLS",

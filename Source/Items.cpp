@@ -8,11 +8,13 @@
 
 #include "Items.h"
 
-void Items::item(int room, std::string n, int uses)
+void Items::item(int room, std::string n, int uses,bool spec,bool vis)
 {
     item_room = room;
     name = std::move(n);
     health = uses;
+    special = spec;
+    visible = vis;
 }
 bool Items::isActive() {return active;}
 bool Items::isInInventory() {return in_inventory;}

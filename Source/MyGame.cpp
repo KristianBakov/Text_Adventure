@@ -42,8 +42,8 @@ bool MyGame::init()
 	key_callback_id = inputs->addCallbackFnc(
 		ASGE::E_KEY, &MyGame::keyHandler, this);
 
-	mouse_callback_id = inputs->addCallbackFnc(
-		ASGE::E_MOUSE_CLICK, &MyGame::clickHandler, this);
+	//mouse_callback_id = inputs->addCallbackFnc(
+	//	ASGE::E_MOUSE_CLICK, &MyGame::clickHandler, this);
 	return true;
 }
 //set the current resolution. Please do nt change
@@ -79,11 +79,29 @@ void MyGame::goSouth()
 }
 void MyGame::initializeItems()
 {
-    items[10].item(25,noun[10],1); // vacuum
-    items[11].item(26,noun[11],1); // batteries
-    items[16].item(60,noun[16],1); //aerosol
-    items[26].item(13,noun[26],1); //bats
-    items[27].item(52,noun[27],1);//ghosts
+    items[1].item(46,noun[1],1,true,true); // painting
+    items[2].item(38,noun[2],1,true,false); // ring
+    items[3].item(35,noun[3],1,true,true); //book of spells
+    items[4].item(50,noun[4],1,true,true); //goblet
+    items[5].item(13,noun[5],1,true,true); //scroll
+    items[6].item(18,noun[6],1,true,true); // coins
+    items[7].item(28,noun[7],1,true,true); //statue
+    items[8].item(42,noun[8],1,true,true); //candlestick
+    items[9].item(10,noun[9],1,false,true); // matches
+    items[10].item(25,noun[10],1,false,true); // vacuum
+    items[11].item(26,noun[11],1,false,true); // batteries
+    items[12].item(4,noun[12],1,false,true); //shovel
+    items[13].item(2,noun[13],1,false,true); //axe
+    items[14].item(7,noun[14],1,false,true); //rope
+    items[15].item(47,noun[15],1,false,true); //boat
+    items[16].item(60,noun[16],1,false,true); //aerosol
+    items[17].item(43,noun[17],3,false,false); //candle
+    items[18].item(32,noun[18],1,false,false); //key
+    items[19].item(13,noun[26],1,false,true); //bats
+    items[20].item(52,noun[27],1,false,true);//ghosts
+    items[21].item(43,noun[28],1,false,false); //drawer
+    items[22].item(43,noun[29],1,false,false); //desk
+	items[23].item(32,noun[30],1,false,false); //coat
 
 }
 void MyGame::initializeRooms()
@@ -300,11 +318,26 @@ void MyGame::inputText(const ASGE::KeyEvent *key) {
 }
 void MyGame::checkNoun(int v)
 {
-	// v represents verb number from the verb string. It is being checked and matched to the appropriate nouns;
+	// v represents verb number from the verb string.
+	// It is being checked and matched to the appropriate nouns;
 	// sets default msg for feedback string;
 	if (v == 0)
 	{
 		feedback.assign("WHAT WILL YOU DO NEXT?");
+	}
+	//Render available command
+	if (v == 1)
+	{
+		feedback.clear();
+		for (int i=1;i<VERB_COUNT;i++)
+		{
+			feedback.append(verb[i] + ",");
+			if (i % 6 == 0)
+			{
+				feedback.append("\n");
+			}
+		}
+		feedback.pop_back();
 	}
 	//Moving around the grid;
 	if (((v == 3 && current_noun == noun[22]) || v == 7) && room[current_room].getEast())
@@ -323,14 +356,16 @@ void MyGame::checkNoun(int v)
 	{
 		goNorth();
 	}
-	if (v == 10 && current_noun == noun[16])
+	// Verbs GET and TAKE
+	if (v == 10 || v == 11)
 	{
-		items[16].setInInventory(true);
-		items[16].setVisibe(false);
-	}
-	if (v == 10 && current_noun == noun[1])
-	{
-
+	    for (int i=0;i<ITEM_COUNT;i++) {
+            if (current_noun == noun[i] && items[i].isVisible() && current_room == items[i].getItemRoom()) {
+                items[i].setInInventory(true);
+                items[i].setVisibe(false);
+                feedback = "YOU GOT THE " + items[i].getName();
+            }
+        }
 	}
 }
 
@@ -339,7 +374,8 @@ void MyGame::update(const ASGE::GameTime &us) {
 						 20, 210, 1.0, ASGE::COLOURS::LIGHTGREEN);
 
 	// updates the exits that are displayed when entering a new room
-	if (room_updated) {
+	if (room_updated)
+	{
 		room_updated = false;
 		exits.clear();
 		if (room[current_room].getNorth()) {
@@ -357,7 +393,7 @@ void MyGame::update(const ASGE::GameTime &us) {
 		}
 	}
 
-	if (current_room == 13 && items[26].isVisible())
+	if (current_room == 13 && items[19].isVisible())
     {
 		room[13].setWest(false);
         current_room = 13;
@@ -365,11 +401,11 @@ void MyGame::update(const ASGE::GameTime &us) {
         if (current_verb == verb[21] && items[16].isInInventory())
 		{
 			feedback = "THE BATS UNLEASH A HORRIFYING SCREAM AND FALL ON THE GROUND.";
-        	items[26].setVisibe(false);
+        	items[19].setVisibe(false);
         	room[13].setWest(true);
 		}
     }
-    if (current_room == 52 && items[27].isVisible())
+    if (current_room == 52 && items[20].isVisible())
     {
     	room[52].setWest(false);
     	room[52].setNorth(false);
@@ -396,27 +432,34 @@ void MyGame::update(const ASGE::GameTime &us) {
 	renderer->renderText(current_noun,
 						 20, 360, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(feedback,
-						 20, 390, 1.0, ASGE::COLOURS::LIGHTGREEN);
-	for (int i=0;i<64;i++) {
-		if (current_room == items[i].getItemRoom() && items[i].isVisible()
-			&& !items[i].isInInventory()) {
-			renderer->renderText(items[i].getName(),
-								 20, 410, 1.0, ASGE::COLOURS::LIGHTGREEN);
-			feedback = "YOU GOT THE " + items[i].getName();
-		}
-	}
+		             	20, 390, 1.0, ASGE::COLOURS::LIGHTGREEN);
 
+	for (int i=0;i<ITEM_COUNT;i++)
+	{
+        if (current_room == items[i].getItemRoom() && items[i].isVisible()
+            && !items[i].isInInventory())
+        {
+            renderer->renderText(items[i].getName(),
+                                 20, 410, 1.0, ASGE::COLOURS::LIGHTGREEN);
+            //feedback = "YOU GOT THE " + items[i].getName();
+        }
+    }
 
-	for (int i = 0; i < 26; i++) {
-		if (current_verb == verb[i]) {
+    //Look at the first word and match it to the second; if not found, display error;
+    bool found_verb = false;
+	for (int i = 0; i < 26; i++)
+	{
+		if (current_verb == verb[i])
+		{
 			checkNoun(i);
-		}
-		//else if (!current_verb.empty()){
-		 //   feedback = "ENTER A VALID COMMAND. 'HELP' FOR LIST OF USABLE COMMANDS.";
-		    // might need to do the else in the checkNoun function
-			//call a function 'error msg'
-		//}
+			found_verb = true;
+			break;
+    	}
 	}
+    if (!found_verb)
+    {
+        feedback = "ENTER A VALID COMMAND. 'HELP' FOR LIST OF USABLE COMMANDS.";
+    }
 }
 
 void MyGame::render(const ASGE::GameTime &us)

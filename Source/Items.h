@@ -10,7 +10,7 @@
 
 class Items {
 public:
-    void item(int room, std::string name,int uses);
+    void item(int room, std::string name,int uses,bool spec,bool vis);
     bool isActive();
     bool isVisible();
     bool isInInventory();
