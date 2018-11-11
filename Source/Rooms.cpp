@@ -11,7 +11,7 @@
 #include "Rooms.h"
 #include <string>
 
-void Rooms::room(bool n, bool s, bool e, bool w, bool u, bool d, std::string na, std::string de, bool i)
+void Rooms::room(bool n, bool s, bool e, bool w, bool u, bool d, std::string na, std::string de, bool i,bool dark)
 {
     north = n;
     south = s;
@@ -22,7 +22,7 @@ void Rooms::room(bool n, bool s, bool e, bool w, bool u, bool d, std::string na,
     name = std::move(na);
     desc = std::move(de);
     has_item = i;
-
+    is_dark = dark;
 }
 
 bool Rooms::getNorth() { return north; }
@@ -32,6 +32,7 @@ bool Rooms::getEast() { return east; }
 bool Rooms::getUp() { return up; }
 bool Rooms::getDown() { return down; }
 bool Rooms::getItems() {return has_item;}
+bool Rooms::isDark() {return is_dark;}
 std::string Rooms::getName() { return name; }
 std::string Rooms::getDesc() { return desc; }
 void Rooms::setEast(bool in) {east = in;}
@@ -39,5 +40,5 @@ void Rooms::setNorth(bool in) {north = in;}
 void Rooms::setSouth(bool in) {south = in;}
 void Rooms::setWest(bool in) {west = in;}
 void Rooms::setHasItem(bool in) {has_item = in;}
-
+void Rooms::setDark(bool in) {is_dark = in;}
 

@@ -47,6 +47,8 @@ private:
     bool door_locked = true;
     bool magic_barrier = true;
     bool on_tree = false;
+    bool candle_lit = false;
+    int candle_life = 45;
 
     static constexpr int ITEM_COUNT = 24;
 	Items items[ITEM_COUNT];

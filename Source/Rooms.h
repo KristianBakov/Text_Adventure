@@ -12,7 +12,7 @@ class Rooms {
 
 public:
 
-    void room(bool n, bool s, bool e, bool w, bool u, bool d, std::string name, std::string desc, bool i);
+    void room(bool n, bool s, bool e, bool w, bool u, bool d, std::string name, std::string desc,bool i,bool dark);
     bool getNorth();
     bool getSouth();
     bool getWest();
@@ -20,6 +20,7 @@ public:
     bool getUp();
     bool getDown();
     bool getItems();
+    bool isDark();
     std::string getName();
     std::string getDesc();
     void setNorth(bool in);
@@ -27,6 +28,7 @@ public:
     void setEast(bool in);
     void setWest(bool in);
     void setHasItem(bool in);
+    void setDark(bool in);
 
 private:
 
@@ -39,8 +41,7 @@ private:
     bool has_item = false;
     std::string desc;
     std::string name;
-    bool is_current_location = false;
-
+    bool is_dark = false;
 };
 
 
