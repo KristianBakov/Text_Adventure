@@ -134,9 +134,9 @@ void MyGame::initializeRooms()
     room[25].room(true,true,false,false,false,false,"Gloomy Passage","", true);
     room[26].room(true,true,true,false,false,false,"Pool of Light","",true);
     room[27].room(false,false,true,true,false,false,"Vaulted Hall","",false);
-    room[28].room(false,true,true,true,false,true,"Hall with Locked Door","",true);
+    room[28].room(false,false,true,true,false,true,"Hall with Locked Door","",true);
     room[29].room(true,true,false,true,false,false,"Trophy Room","",false);
-    room[30].room(true,true,true,false,false,false,"Cellar","",false);
+    room[30].room(true,true,false,false,false,false,"Cellar","",false);
     room[31].room(true,true,false,false,false,false,"Cliff Path (North)","",false);
     room[32].room(false,true,false,false,false,false,"Cupboard","", true);
     room[33].room(true,true,true,false,false,false,"Front Hall","",false);
@@ -435,6 +435,10 @@ void MyGame::checkNoun(int v)
 		{
 			feedback = "YOU CAN SEE A DRAWER";
 		}
+		else if (current_room == 38 && current_noun == "COFFIN")
+		{
+			feedback.assign("THAT'S CREEPY! BUT IT LOOKS LIKE IT CAN BE OPENED.");
+		}
     }
     //verb OPEN
     else if (v == 13)
@@ -454,6 +458,11 @@ void MyGame::checkNoun(int v)
 				feedback.assign("IT'S ALREADY OPEN.");
 			}
 		}
+		else if (current_room == 38 && current_noun == "COFFIN")
+		{
+			feedback.assign("ALL THAT IS LEFT INSIDE ARE ASHES AND A DIAMOND RING.");
+			items[2].setVisibe(true);
+		}
 	}
 	//verb READ
 	else if (v == 14)
@@ -467,6 +476,43 @@ void MyGame::checkNoun(int v)
 			feedback.assign("USE THESE WORDS WITH CARE 'XZANFAR'");
 		}
 	}
+	//verb SAY
+	else if (v == 15)
+	{
+		if (current_noun == "XZANFAR")
+		{
+			magic_barrier = false;
+			room[45].setWest(true);
+			feedback.assign("THE MAGICAL BARRIER DISAPPEARS");
+		}
+		else
+		{
+			feedback.assign("'" + current_noun + "' ECHOES THROUGH THE SILENCE.");
+		}
+	}
+	//verb DIG
+	else if (v == 16)
+	{
+		if (items[12].isInInventory())
+		{
+			if (current_room == 30)
+			{
+				input_copy.clear();
+				feedback.assign("YOU DUG THE BARS OUT AND ESCAPED EAST. YOU ARE OUT OF THE HOUSE.");
+				room[30].setEast(true);
+				room[31].setWest(true);
+				current_room++;
+			}
+			else
+			{
+				feedback.assign("YOU DUG A HOLE.");
+			}
+		}
+		else
+		{
+			feedback.assign("DIGGING WITH YOUR HANDS IS NOT A GOOD IDEA.");
+		}
+	}
 	//verb SWING
 	else if (v == 17)
 	{
@@ -474,7 +520,7 @@ void MyGame::checkNoun(int v)
 		{
 			if (current_room == 43)
 			{
-				feedback.assign("YOU BROKE THE THIN WALL!");
+				feedback.assign("YOU BROKE THE THIN WALL! THERE IS A ROOM TO THE NORTH.");
 				room[43].setNorth(true);
 			}
 			else
@@ -483,13 +529,55 @@ void MyGame::checkNoun(int v)
 			}
 		}
 	}
+	//verb CLIMB
+	else if (v == 18)
+	{
+		if (items[14].isInInventory())
+		{
+			if (current_room == 7 && current_noun == "TREE")
+			{
+				feedback.assign("CLIMBED UP. YOU CAN SEE FOREST TO THE WEST AND CLIFFS TO THE SOUTH.");
+				on_tree = true;
+			}
+			else
+			{
+				feedback.assign("CLIMB " + current_noun + "?");
+			}
+		}
+		else
+		{
+			feedback.assign("YOU NEED SOMETHING TO CLIMB WITH.");
+		}
+	}
 	//verb UNLOCK
 	else if (v == 23)
 	{
 		if (current_room == 28 && door_locked)
 		{
 			door_locked = false;
+			room[28].setSouth(true);
 			feedback.assign("THE KEY TURNS!");
+		}
+	}
+	//verb LEAVE
+	else if (v == 24)
+	{
+//		for (int i = 0; i < ITEM_COUNT; i++)
+//		{
+//			if (current_noun == items[i].getName() && items[i].isInInventory())
+//			{
+//				feedback.assign("YOU LEFT " + items[i].getName());
+//				items[i].setInInventory(false);
+//				item_string.clear();
+//				//room[current_room].setHasItem(true);
+//				items[i].setItemRoom(current_room);
+//				break;
+//			}
+//			else
+//			{
+//				feedback.assign("YOU DON'T HAVE " + current_noun);
+//				break;
+//			}
 		}
 	}
 }
@@ -554,6 +642,11 @@ void MyGame::update(const ASGE::GameTime &us) {
         	room[52].setNorth(true);
 		}
     }
+	if (current_room == 45 && items[1].isInInventory() && magic_barrier)
+	{
+		room[45].setWest(false);
+		feedback.assign("A MAGICAL BARRIER BLOCKS YOUR WAY TO THE WEST.");
+	}
 	renderer->renderText(input,
 						 20, 270, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	//renderer->renderText(verb[1],

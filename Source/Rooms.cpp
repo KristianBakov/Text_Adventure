@@ -38,5 +38,6 @@ void Rooms::setEast(bool in) {east = in;}
 void Rooms::setNorth(bool in) {north = in;}
 void Rooms::setSouth(bool in) {south = in;}
 void Rooms::setWest(bool in) {west = in;}
+void Rooms::setHasItem(bool in) {has_item = in;}
 
 

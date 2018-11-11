@@ -26,6 +26,7 @@ public:
     void setSouth(bool in);
     void setEast(bool in);
     void setWest(bool in);
+    void setHasItem(bool in);
 
 private:
 
