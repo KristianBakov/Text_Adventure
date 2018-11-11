@@ -149,7 +149,7 @@ void MyGame::initializeRooms()
     room[40].room(true,false,true,false,false,false,"Closet","",false);
     room[41].room(true,true,false,true,false,false,"Front Lobby","",false);
     room[42].room(true,false,true,false,false,false,"Library","",true);
-    room[43].room(true,false,false,true,false,false,"Study","", true);
+    room[43].room(false,false,false,true,false,false,"Study","", true);
     room[44].room(true,true,true,false,false,false,"Cobwebby Room","",false);
     room[45].room(false,false,true,true,false,false,"Cold Chamber","",false);
     room[46].room(false,false,false,true,false,false,"Spooky Room","", true);
@@ -325,7 +325,7 @@ void MyGame::checkNoun(int v)
 	{
 		feedback.assign("WHAT WILL YOU DO NEXT?");
 	}
-	//Render available command
+	//Render available commands
 	else if (v == 1)
 	{
 		feedback.clear();
@@ -337,7 +337,26 @@ void MyGame::checkNoun(int v)
 				feedback.append("\n");
 			}
 		}
-		feedback.pop_back();
+		std::size_t last_comma = feedback.find_last_of(',');
+		feedback.erase(last_comma);
+	}
+	//Items being carried - INVENTORY
+	else if (v == 2)
+	{
+		feedback.clear();
+		for (int i=1;i<ITEM_COUNT;i++)
+		{
+			if (items[i].isInInventory())
+			{
+				feedback.append(items[i].getName() + ", ");
+				if (i % 6 == 0)
+				{
+					feedback.append("\n");
+				}
+			}
+		}
+		std::size_t last_comma = feedback.find_last_of(',');
+		feedback.erase(last_comma);
 	}
 	//Moving around the grid;
 	else if (((v == 3 && current_noun == noun[22]) || v == 7))
@@ -387,7 +406,8 @@ void MyGame::checkNoun(int v)
 	// Verbs GET and TAKE
 	else if (v == 10 || v == 11)
 	{
-	    for (int i=0;i<ITEM_COUNT;i++) {
+	    for (int i=0;i<ITEM_COUNT;i++)
+	    {
             if (current_noun == noun[i] && items[i].isVisible()
             && current_room == items[i].getItemRoom() && items[i].isGettable()
             && !is_paralyzed)
@@ -399,10 +419,79 @@ void MyGame::checkNoun(int v)
             }
         }
 	}
-//	else if (v == 12 && current_noun == items[ITEM_COUNT].getName())
-//    {
-//
-//    }
+	//verb EXAMINE
+	else if (v == 12)
+    {
+		if (current_room == 3 && current_noun == "RUBBISH")
+		{
+			feedback = "THAT STINKS!";
+		}
+		else if (current_room == 32 && current_noun == noun[30])
+		{
+			feedback = "AN OLD COAT. YOU WERE ABLE TO SPOT A KEY HANGING FROM ITS POCKET.";
+			items[18].setVisibe(true);
+		}
+		else if (current_room ==  43 && current_noun == noun[29])
+		{
+			feedback = "YOU CAN SEE A DRAWER";
+		}
+    }
+    //verb OPEN
+    else if (v == 13)
+	{
+    	if (current_noun == noun[28] && current_room == 43)
+		{
+    		items[17].setVisibe(true);
+		}
+		else if (current_room == 28 && current_noun == "DOOR")
+		{
+			if (door_locked)
+			{
+				feedback.assign("IT'S LOCKED.");
+			}
+			else
+			{
+				feedback.assign("IT'S ALREADY OPEN.");
+			}
+		}
+	}
+	//verb READ
+	else if (v == 14)
+	{
+		if (current_room == 42 && current_noun == "BOOKS")
+		{
+			feedback.assign("THEY SPEAK OF DEMONIC WORKS");
+		}
+		else if (current_noun == noun[3] && items[3].isInInventory())
+		{
+			feedback.assign("USE THESE WORDS WITH CARE 'XZANFAR'");
+		}
+	}
+	//verb SWING
+	else if (v == 17)
+	{
+		if (items[13].isInInventory())
+		{
+			if (current_room == 43)
+			{
+				feedback.assign("YOU BROKE THE THIN WALL!");
+				room[43].setNorth(true);
+			}
+			else
+			{
+				feedback.assign("WHOOSH!");
+			}
+		}
+	}
+	//verb UNLOCK
+	else if (v == 23)
+	{
+		if (current_room == 28 && door_locked)
+		{
+			door_locked = false;
+			feedback.assign("THE KEY TURNS!");
+		}
+	}
 }
 
 void MyGame::update(const ASGE::GameTime &us) {
@@ -414,17 +503,21 @@ void MyGame::update(const ASGE::GameTime &us) {
 	{
 		room_updated = false;
 		exits.clear();
-		if (room[current_room].getNorth()) {
+		item_string.clear();
+		if (room[current_room].getNorth())
+		{
 			exits.append("|N| ");
-
 		}
-		if (room[current_room].getSouth()) {
+		if (room[current_room].getSouth())
+		{
 			exits.append("|S| ");
 		}
-		if (room[current_room].getWest()) {
+		if (room[current_room].getWest())
+		{
 			exits.append("|W| ");
 		}
-		if (room[current_room].getEast()) {
+		if (room[current_room].getEast())
+		{
 			exits.append("|E| ");
 		}
 	}
@@ -490,7 +583,7 @@ void MyGame::update(const ASGE::GameTime &us) {
         		if (current_room == items[i].getItemRoom() && items[i].isVisible()
         		&& !items[i].isInInventory() && items[i].isGettable())
 				{
-        			item_string.assign(items[i].getName());
+        			item_string.assign("YOU CAN SEE " + items[i].getName());
         			break;
 				}
 			}

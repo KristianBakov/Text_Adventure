@@ -44,6 +44,7 @@ private:
 	bool room_updated = true;
 	bool is_paralyzed = false;
     bool found_verb = false;
+    bool door_locked = true;
 
     static constexpr int ITEM_COUNT = 24;
 	Items items[ITEM_COUNT];
@@ -60,7 +61,7 @@ private:
 	std::string verb[VERB_COUNT] = {"","HELP","INVENTORY","GO","N","S","W","E","U","D","GET",
                          "TAKE","EXAMINE","OPEN","READ","SAY","DIG","SWING","CLIMB",
                          "LIGHT","UNLIGHT","SPRAY","USE","UNLOCK","LEAVE","SCORE"};
-	std::string noun[31] = {"","PAINTING","RING","BOOK","GOBLET","SCROLLS",
+	std::string noun[31] = {"","PAINTING","RING","SPELLS","GOBLET","SCROLLS",
                          "COINS","STATUE","CANDLESTICK","MATCHES","VACUUM",
                          "BATTERIES","SHOVEL","AXE","ROPE","BOAT","AEROSOL","CANDLE",
                          "KEY","NORTH","SOUTH","WEST","EAST","UP","DOWN","DOOR","BATS",
