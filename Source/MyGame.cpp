@@ -79,97 +79,97 @@ void MyGame::goSouth()
 }
 void MyGame::initializeItems()
 {
-    items[1].item(46,noun[1],1,true,true); // painting
-    items[2].item(38,noun[2],1,true,false); // ring
-    items[3].item(35,noun[3],1,true,true); //book of spells
-    items[4].item(50,noun[4],1,true,true); //goblet
-    items[5].item(13,noun[5],1,true,true); //scroll
-    items[6].item(18,noun[6],1,true,true); // coins
-    items[7].item(28,noun[7],1,true,true); //statue
-    items[8].item(42,noun[8],1,true,true); //candlestick
-    items[9].item(10,noun[9],1,false,true); // matches
-    items[10].item(25,noun[10],1,false,true); // vacuum
-    items[11].item(26,noun[11],1,false,true); // batteries
-    items[12].item(4,noun[12],1,false,true); //shovel
-    items[13].item(2,noun[13],1,false,true); //axe
-    items[14].item(7,noun[14],1,false,true); //rope
-    items[15].item(47,noun[15],1,false,true); //boat
-    items[16].item(60,noun[16],1,false,true); //aerosol
-    items[17].item(43,noun[17],3,false,false); //candle
-    items[18].item(32,noun[18],1,false,false); //key
-    items[19].item(13,noun[26],1,false,true); //bats
-    items[20].item(52,noun[27],1,false,true);//ghosts
-    items[21].item(43,noun[28],1,false,false); //drawer
-    items[22].item(43,noun[29],1,false,false); //desk
-	items[23].item(32,noun[30],1,false,false); //coat
+    items[1].item(46,noun[1],true,true,true); // painting
+    items[2].item(38,noun[2],true,false,true); // ring
+    items[3].item(35,noun[3],true,true,true); //book of spells
+    items[4].item(50,noun[4],true,true,true); //goblet
+    items[5].item(13,noun[5],true,true,true); //scroll
+    items[6].item(18,noun[6],true,true,true); // coins
+    items[7].item(28,noun[7],true,true,true); //statue
+    items[8].item(42,noun[8],true,true,true); //candlestick
+    items[9].item(10,noun[9],false,true,true); // matches
+    items[10].item(25,noun[10],false,true,true); // vacuum
+    items[11].item(26,noun[11],false,true,true); // batteries
+    items[12].item(4,noun[12],false,true,true); //shovel
+    items[13].item(2,noun[13],false,true,true); //axe
+    items[14].item(7,noun[14],false,true,true); //rope
+    items[15].item(47,noun[15],false,true,true); //boat
+    items[16].item(60,noun[16],false,true,true); //aerosol
+    items[17].item(43,noun[17],false,false,true); //candle
+    items[18].item(32,noun[18],false,false,true); //key
+    items[19].item(13,noun[26],false,true, false); //bats
+    items[20].item(52,noun[27],false,true, false);//ghosts
+    items[21].item(43,noun[28],false,false, false); //drawer
+    items[22].item(43,noun[29],false,false, false); //desk
+	items[23].item(32,noun[30],false,false, false); //coat
 
 }
 void MyGame::initializeRooms()
 {
-    room[0].room(false,true,true,false,false,false,"Dark corner","Spook");
-    room[1].room(false,false,true,true,false,false,"Overgrown Garden","Spook");
-    room[2].room(false,false,true,true,false,false,"By Woodpile","spook");
-    room[3].room(false,true,true,true,false,false,"Rubbish Yard","sppok");
-    room[4].room(false,false,true,true,false,false,"Weedpatch","");
-    room[5].room(false,false,true,true,false,false,"Forest","");
-    room[6].room(false,true,true,true,false,false,"Thick Forest","");
-    room[7].room(false,true,false,true,false,false,"Blasted Tree","");
-    room[8].room(true,true,false,false,false,false,"Corner of the House","");
-    room[9].room(false,true,true,false,false,false,"Entrance to the Kitchen","");
-    room[10].room(false,false,true,true,false,false,"Kitchen","");
-    room[11].room(true,false,false,true,false,false,"Scullery door","");
-    room[12].room(false,true,true,false,false,true,"Dusty room","");
-    room[13].room(false,false,false,true,false,false,"Rear turret room","");
-    room[14].room(true,false,true,false,false,false,"Clearing","");
-    room[15].room(true,true,false,true,false,false,"Path","");
-    room[16].room(true,true,false,false,false,false,"Side of House","");
-    room[17].room(true,true,false,false,false,false,"Back of hallway","");
-    room[18].room(false,true,true,false,false,false,"Dark Alcove","");
-    room[19].room(false,false,true,true,false,false,"Small Dark Room","");
-    room[20].room(true,false,false,true,true,true,"Spiral Staircase","");
-    room[21].room(false,true,true,false,false,false,"Wide Passage","");
-    room[22].room(false,true,false,true,true,true,"Slippery stairs","");
-    room[23].room(true,true,false,false,false,false,"Clifftop","");
-    room[24].room(true,false,false,false,false,false,"Crumbling Wall","");
-    room[25].room(true,true,false,false,false,false,"Gloomy Passage","");
-    room[26].room(true,true,true,false,false,false,"Pool of Light","");
-    room[27].room(false,false,true,true,false,false,"Vaulted Hall","");
-    room[28].room(false,true,true,true,false,true,"Hall with Locked Door","");
-    room[29].room(true,true,false,true,false,false,"Trophy Room","");
-    room[30].room(true,true,true,false,false,false,"Cellar","");
-    room[31].room(true,true,false,false,false,false,"Cliff Path (North)","");
-    room[32].room(false,true,false,false,false,false,"Cupboard","");
-    room[33].room(true,true,true,false,false,false,"Front Hall","");
-    room[34].room(true,true,false,true,false,false,"Sitting Room","");
-    room[35].room(false,true,false,false,false,false,"Secret Room","");
-    room[36].room(true,true,false,false,true,true,"Steep Marble Steps","");
-    room[37].room(true,false,false,false,false,false,"Dining Room","");
-    room[38].room(true,false,false,false,false,false,"Deep Cellar","");
-    room[39].room(true,true,false,false,false,false,"Cliff Path (South)","");
-    room[40].room(true,false,true,false,false,false,"Closet","");
-    room[41].room(true,true,false,true,false,false,"Front Lobby","");
-    room[42].room(true,false,true,false,false,false,"Library","");
-    room[43].room(true,false,false,true,false,false,"Study","");
-    room[44].room(true,true,true,false,false,false,"Cobwebby Room","");
-    room[45].room(false,false,true,true,false,false,"Cold Chamber","");
-    room[46].room(false,false,false,true,false,false,"Spooky Room","");
-    room[47].room(true,true,false,false,false,false,"Cliff Path by Marsh","");
-    room[48].room(false,true,true,false,false,false,"Verandah","");
-	room[49].room(true, true, false, true, false, false, "Front Porch", "Spooky");
-	room[50].room(false,false,true,false,false,false,"Front Tower","");
-	room[51].room(false,false,true,true,false,false,"Slopping Corridor","");
-	room[52].room(true,false,false,true,false,false,"Upper Gallery","");
-	room[53].room(false,true,false,false,false,false,"Marsh by Wall","");
-	room[54].room(false,true,true,true,false,false,"Marsh","");
-	room[55].room(true,false,false,true,false,false,"Soggy Path","");
-	room[56].room(true,false,true,false,false,false,"Twisted Railings","");
-	room[57].room(true, false, true, true, false, false, "Path by iron door", "Spooky");
-	room[58].room(false, false, true, true, false, false, "Path by railings", "more spook");
-	room[59].room(false, false, true, true, false, false,"Beneath Tower","h");
-	room[60].room(false, false, true, true, false, false,"Debris","h");
-	room[61].room(true, false, true, true, false, false,"Fallen Brickwork","h");
-	room[62].room(true, false, true, true, false, false,"Stone Arch","h");
-	room[63].room(false, false, false, true, false, false,"Crumbling Clifftop","h");
+    room[0].room(false,true,true,false,false,false,"Dark corner","Spook", false);
+    room[1].room(false,false,true,true,false,false,"Overgrown Garden","Spook", false);
+    room[2].room(false,false,true,true,false,false,"By Woodpile","spook",true);
+    room[3].room(false,true,true,true,false,false,"Rubbish Yard","sppok",false);
+    room[4].room(false,false,true,true,false,false,"Weedpatch","", true);
+    room[5].room(false,false,true,true,false,false,"Forest","",false);
+    room[6].room(false,true,true,true,false,false,"Thick Forest","", false);
+    room[7].room(false,true,false,true,false,false,"Blasted Tree","",true);
+    room[8].room(true,true,false,false,false,false,"Corner of the House","",false);
+    room[9].room(false,true,true,false,false,false,"Entrance to the Kitchen","",false);
+    room[10].room(false,false,true,true,false,false,"Kitchen","",true);
+    room[11].room(true,false,false,true,false,false,"Scullery door","",false);
+    room[12].room(false,true,true,false,false,true,"Dusty room","",false);
+    room[13].room(false,false,false,true,false,false,"Rear turret room","", true);
+    room[14].room(true,false,true,false,false,false,"Clearing","",false);
+    room[15].room(true,true,false,true,false,false,"Path","",false);
+    room[16].room(true,true,false,false,false,false,"Side of House","",false);
+    room[17].room(true,true,false,false,false,false,"Back of hallway","",false);
+    room[18].room(false,true,true,false,false,false,"Dark Alcove","", true);
+    room[19].room(false,false,true,true,false,false,"Small Dark Room","",false);
+    room[20].room(true,false,false,true,true,true,"Spiral Staircase","",false);
+    room[21].room(false,true,true,false,false,false,"Wide Passage","",false);
+    room[22].room(false,true,false,true,true,true,"Slippery stairs","",false);
+    room[23].room(true,true,false,false,false,false,"Clifftop","",false);
+    room[24].room(true,false,false,false,false,false,"Crumbling Wall","",false);
+    room[25].room(true,true,false,false,false,false,"Gloomy Passage","", true);
+    room[26].room(true,true,true,false,false,false,"Pool of Light","",true);
+    room[27].room(false,false,true,true,false,false,"Vaulted Hall","",false);
+    room[28].room(false,true,true,true,false,true,"Hall with Locked Door","",true);
+    room[29].room(true,true,false,true,false,false,"Trophy Room","",false);
+    room[30].room(true,true,true,false,false,false,"Cellar","",false);
+    room[31].room(true,true,false,false,false,false,"Cliff Path (North)","",false);
+    room[32].room(false,true,false,false,false,false,"Cupboard","", true);
+    room[33].room(true,true,true,false,false,false,"Front Hall","",false);
+    room[34].room(true,true,false,true,false,false,"Sitting Room","",false);
+    room[35].room(false,true,false,false,false,false,"Secret Room","",true);
+    room[36].room(true,true,false,false,true,true,"Steep Marble Steps","",false);
+    room[37].room(true,false,false,false,false,false,"Dining Room","",false);
+    room[38].room(true,false,false,false,false,false,"Deep Cellar","",true);
+    room[39].room(true,true,false,false,false,false,"Cliff Path (South)","",false);
+    room[40].room(true,false,true,false,false,false,"Closet","",false);
+    room[41].room(true,true,false,true,false,false,"Front Lobby","",false);
+    room[42].room(true,false,true,false,false,false,"Library","",true);
+    room[43].room(true,false,false,true,false,false,"Study","", true);
+    room[44].room(true,true,true,false,false,false,"Cobwebby Room","",false);
+    room[45].room(false,false,true,true,false,false,"Cold Chamber","",false);
+    room[46].room(false,false,false,true,false,false,"Spooky Room","", true);
+    room[47].room(true,true,false,false,false,false,"Cliff Path by Marsh","", true);
+    room[48].room(false,true,true,false,false,false,"Verandah","",false);
+	room[49].room(true, true, false, true, false, false, "Front Porch", "Spooky",false);
+	room[50].room(false,false,true,false,false,false,"Front Tower","", true);
+	room[51].room(false,false,true,true,false,false,"Slopping Corridor","",false);
+	room[52].room(true,false,false,true,false,false,"Upper Gallery","",false);
+	room[53].room(false,true,false,false,false,false,"Marsh by Wall","",false);
+	room[54].room(false,true,true,true,false,false,"Marsh","",false);
+	room[55].room(true,false,false,true,false,false,"Soggy Path","",false);
+	room[56].room(true,false,true,false,false,false,"Twisted Railings","",false);
+	room[57].room(true, false, true, true, false, false, "Path by iron door", "Spooky",false);
+	room[58].room(false, false, true, true, false, false, "Path by railings", "more spook",false);
+	room[59].room(false, false, true, true, false, false,"Beneath Tower","h",false);
+	room[60].room(false, false, true, true, false, false,"Debris","h",true);
+	room[61].room(true, false, true, true, false, false,"Fallen Brickwork","h",false);
+	room[62].room(true, false, true, true, false, false,"Stone Arch","h",false);
+	room[63].room(false, false, false, true, false, false,"Crumbling Clifftop","h",false);
 }
 
 
@@ -186,7 +186,7 @@ void MyGame::keyHandler(const ASGE::SharedEventData data)
 	if (key->key == ASGE::KEYS::KEY_ENTER &&key->action == ASGE::KEYS::KEY_RELEASED)
 	{
 		enter_pressed = false;
-	}
+}
 }
 
 void MyGame::clickHandler(const ASGE::SharedEventData data)
@@ -326,7 +326,7 @@ void MyGame::checkNoun(int v)
 		feedback.assign("WHAT WILL YOU DO NEXT?");
 	}
 	//Render available command
-	if (v == 1)
+	else if (v == 1)
 	{
 		feedback.clear();
 		for (int i=1;i<VERB_COUNT;i++)
@@ -340,33 +340,69 @@ void MyGame::checkNoun(int v)
 		feedback.pop_back();
 	}
 	//Moving around the grid;
-	if (((v == 3 && current_noun == noun[22]) || v == 7) && room[current_room].getEast())
+	else if (((v == 3 && current_noun == noun[22]) || v == 7))
     {
-		goEast();
+            if (room[current_room].getEast())
+            {
+                goEast();
+            }
+            else if (!room[current_room].getEast())
+            {
+                feedback.assign("CAN'T GO FURTHER EAST!");
+            }
     }
-	if (((v == 3 && current_noun == noun[21]) || v == 6) && room[current_room].getWest())
+	else if (((v == 3 && current_noun == noun[21]) || v == 6))
 	{
-		goWest();
+	    if (room[current_room].getWest())
+	    {
+            goWest();
+        }
+        else if (!room[current_room].getWest())
+        {
+            feedback.assign("CAN'T GO FURTHER WEST!");
+        }
 	}
-	if (((v == 3 && current_noun == noun[20]) || v == 5) && room[current_room].getSouth())
+	else if (((v == 3 && current_noun == noun[20]) || v == 5))
 	{
-		goSouth();
+	    if (room[current_room].getSouth())
+	    {
+            goSouth();
+        }
+        else if (!room[current_room].getSouth())
+        {
+            feedback.assign("CAN'T GO FURTHER SOUTH!");
+        }
 	}
-	if (((v == 3 && current_noun == noun[19]) || v == 4) && room[current_room].getNorth())
+	else if (((v == 3 && current_noun == noun[19]) || v == 4))
 	{
-		goNorth();
+	    if (room[current_room].getNorth())
+	    {
+            goNorth();
+        }
+        else if (!room[current_room].getNorth())
+        {
+            feedback.assign("CAN'T GO FURTHER NORTH!");
+        }
 	}
 	// Verbs GET and TAKE
-	if (v == 10 || v == 11)
+	else if (v == 10 || v == 11)
 	{
 	    for (int i=0;i<ITEM_COUNT;i++) {
-            if (current_noun == noun[i] && items[i].isVisible() && current_room == items[i].getItemRoom()) {
+            if (current_noun == noun[i] && items[i].isVisible()
+            && current_room == items[i].getItemRoom() && items[i].isGettable()
+            && !is_paralyzed)
+            {
                 items[i].setInInventory(true);
                 items[i].setVisibe(false);
                 feedback = "YOU GOT THE " + items[i].getName();
+                item_string.clear();
             }
         }
 	}
+//	else if (v == 12 && current_noun == items[ITEM_COUNT].getName())
+//    {
+//
+//    }
 }
 
 void MyGame::update(const ASGE::GameTime &us) {
@@ -397,9 +433,12 @@ void MyGame::update(const ASGE::GameTime &us) {
     {
 		room[13].setWest(false);
         current_room = 13;
+        is_paralyzed = true;
         feedback = "YOU HAVE BEEN ATTACKED BY BATS! YOU ARE PARALYZED AND CANNOT MOVE.";
-        if (current_verb == verb[21] && items[16].isInInventory())
+        if (current_verb == verb[21] && items[16].isInInventory()
+        && (current_noun == noun[16] || current_noun == noun[26]))
 		{
+        	is_paralyzed = false;
 			feedback = "THE BATS UNLEASH A HORRIFYING SCREAM AND FALL ON THE GROUND.";
         	items[19].setVisibe(false);
         	room[13].setWest(true);
@@ -410,7 +449,17 @@ void MyGame::update(const ASGE::GameTime &us) {
     	room[52].setWest(false);
     	room[52].setNorth(false);
         current_room = 52;
+        is_paralyzed = true;
         feedback = "YOU HAVE BEEN ATTACKED BY SPOOKY GHOSTS! YOU ARE PARALYZED AND CANNOT MOVE.";
+        if (current_verb == verb[22] && items[10].isInInventory()
+        && items[11].isInInventory() && current_noun == noun[10])
+		{
+        	is_paralyzed = false;
+        	feedback = "THE GHOSTS HAVE BEEN SUCKED UP!";
+			items[20].setVisibe(false);
+        	room[52].setWest(true);
+        	room[52].setNorth(true);
+		}
     }
 	renderer->renderText(input,
 						 20, 270, 1.0, ASGE::COLOURS::LIGHTGREEN);
@@ -434,20 +483,26 @@ void MyGame::update(const ASGE::GameTime &us) {
 	renderer->renderText(feedback,
 		             	20, 390, 1.0, ASGE::COLOURS::LIGHTGREEN);
 
-	for (int i=0;i<ITEM_COUNT;i++)
-	{
-        if (current_room == items[i].getItemRoom() && items[i].isVisible()
-            && !items[i].isInInventory())
-        {
-            renderer->renderText(items[i].getName(),
-                                 20, 410, 1.0, ASGE::COLOURS::LIGHTGREEN);
-            //feedback = "YOU GOT THE " + items[i].getName();
-        }
-    }
+        if (room[current_room].getItems())
+		{
+        	for (int i =0;i <ITEM_COUNT;i++)
+			{
+        		if (current_room == items[i].getItemRoom() && items[i].isVisible()
+        		&& !items[i].isInInventory() && items[i].isGettable())
+				{
+        			item_string.assign(items[i].getName());
+        			break;
+				}
+			}
+		}
+		else
+		{
+			item_string.assign("");
+		}
 
     //Look at the first word and match it to the second; if not found, display error;
-    bool found_verb = false;
-	for (int i = 0; i < 26; i++)
+    found_verb = false;
+	for (int i = 0; i < VERB_COUNT; i++)
 	{
 		if (current_verb == verb[i])
 		{
@@ -470,6 +525,8 @@ void MyGame::render(const ASGE::GameTime &us)
 		20, 180, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText("Exits:",
 		20, 240, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	renderer->renderText(item_string,
+						 20, 410, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	return;
 }
 

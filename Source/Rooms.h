@@ -12,13 +12,14 @@ class Rooms {
 
 public:
 
-    void room(bool n, bool s, bool e, bool w, bool u, bool d, std::string name, std::string desc);
+    void room(bool n, bool s, bool e, bool w, bool u, bool d, std::string name, std::string desc, bool i);
     bool getNorth();
     bool getSouth();
     bool getWest();
     bool getEast();
     bool getUp();
     bool getDown();
+    bool getItems();
     std::string getName();
     std::string getDesc();
     void setNorth(bool in);
@@ -34,6 +35,7 @@ private:
     bool west = false;
     bool up = false;
     bool down = false;
+    bool has_item = false;
     std::string desc;
     std::string name;
     bool is_current_location = false;
