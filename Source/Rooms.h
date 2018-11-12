@@ -29,6 +29,8 @@ public:
     void setWest(bool in);
     void setHasItem(bool in);
     void setDark(bool in);
+    void setDesc(std::string in);
+    void setName(std::string in);
 
 private:
 

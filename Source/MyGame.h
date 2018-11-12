@@ -57,6 +57,7 @@ private:
 	std::string input;
 	std::string current_verb = "";
 	std::string current_noun;
+	std::string current_desc;
 	std::string input_copy;
 	std::string feedback;
     std::size_t found_space = 0;
@@ -65,14 +66,15 @@ private:
 	std::string verb[VERB_COUNT] = {"","HELP","INVENTORY","GO","N","S","W","E","U","D","GET",
                          "TAKE","EXAMINE","OPEN","READ","SAY","DIG","SWING","CLIMB",
                          "LIGHT","UNLIGHT","SPRAY","USE","UNLOCK","LEAVE","SCORE"};
-	std::string noun[31] = {"","PAINTING","RING","SPELLS","GOBLET","SCROLLS",
+	static constexpr  int NOUN_COUNT = 31;
+	std::string noun[NOUN_COUNT] = {"","PAINTING","RING","SPELLS","GOBLET","SCROLLS",
                          "COINS","STATUE","CANDLESTICK","MATCHES","VACUUM",
                          "BATTERIES","SHOVEL","AXE","ROPE","BOAT","AEROSOL","CANDLE",
                          "KEY","NORTH","SOUTH","WEST","EAST","UP","DOWN","DOOR","BATS",
                          "GHOSTS","DRAWER","DESK","COAT"};
 	std::string exits;
 	std::string item_string;
-	std::string test;
+	std::string description;
 
 	rect mouse_cursor;
 };

@@ -41,4 +41,6 @@ void Rooms::setSouth(bool in) {south = in;}
 void Rooms::setWest(bool in) {west = in;}
 void Rooms::setHasItem(bool in) {has_item = in;}
 void Rooms::setDark(bool in) {is_dark = in;}
+void Rooms::setName(std::string in) {name = in;}
+void Rooms::setDesc(std::string in) {desc = in;}
 
