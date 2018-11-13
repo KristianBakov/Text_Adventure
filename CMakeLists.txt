@@ -22,7 +22,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(BUILD_SHARED_LIBS OFF)
 
 ## itch.io and gamedata settings ##
-set(GAMEDATA_FOLDER "DATA")
+set(GAMEDATA_FOLDER "Resources")
 set(ITCHIO_USER     "")
 
 ## files used to build this game

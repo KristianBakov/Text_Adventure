@@ -18,7 +18,8 @@
 
 MyGame::MyGame() = default;
 
-MyGame::~MyGame() {
+MyGame::~MyGame()
+{
 	this->inputs->unregisterCallback(static_cast<unsigned int>(key_callback_id));
 	this->inputs->unregisterCallback(static_cast<unsigned int>(mouse_callback_id));
 }
@@ -57,6 +58,24 @@ for (int i = 1;i <19;i++)
 
 	//mouse_callback_id = inputs->addCallbackFnc(
 	//	ASGE::E_MOUSE_CLICK, &MyGame::clickHandler, this);
+
+
+    if (!specialItems[0].addSpriteComponent(renderer.get(), "Resources/item0.png"))
+    {
+        return false;
+    }
+//	for (int i=0; i<7; i++)
+//    {
+//        if (!specialItems[i].addSpriteComponent(renderer.get(),
+//                "Resources/item"+std::to_string(i)+".png")) {
+//            return false;
+//        }
+//        specialItems[i].spriteComponent()->getSprite()->width(OBJ_X);
+//        specialItems[i].spriteComponent()->getSprite()->height(OBJ_Y);
+//        specialItems[i].spriteComponent()->getSprite()->xPos(STR_POS_X);
+//        specialItems[i].spriteComponent()->getSprite()->yPos(STR_POS_Y);
+//    }
+
 	return true;
 }
 //set the current resolution. Please do nt change
@@ -150,29 +169,29 @@ void MyGame::goSouth()
 }
 void MyGame::initializeItems()
 {
-    items[1].item(46,noun[1],true,true,true); // painting
-    items[2].item(38,noun[2],true,false,true); // ring
-    items[3].item(35,noun[3],true,true,true); //book of spells
-    items[4].item(50,noun[4],true,true,true); //goblet
-    items[5].item(13,noun[5],true,true,true); //scroll
-    items[6].item(18,noun[6],true,true,true); // coins
-    items[7].item(28,noun[7],true,true,true); //statue
-    items[8].item(42,noun[8],true,true,true); //candlestick
-    items[9].item(10,noun[9],false,true,true); // matches
-    items[10].item(25,noun[10],false,true,true); // vacuum
-    items[11].item(26,noun[11],false,true,true); // batteries
-    items[12].item(4,noun[12],false,true,true); //shovel
-    items[13].item(2,noun[13],false,true,true); //axe
-    items[14].item(7,noun[14],false,true,true); //rope
-    items[15].item(47,noun[15],false,true,true); //boat
-    items[16].item(60,noun[16],false,true,true); //aerosol
-    items[17].item(43,noun[17],false,false,true); //candle
-    items[18].item(32,noun[18],false,false,true); //key
-    items[19].item(13,noun[26],false,true, false); //bats
-    items[20].item(52,noun[27],false,true, false);//ghosts
-    items[21].item(43,noun[28],false,false, false); //drawer
-    items[22].item(43,noun[29],false,false, false); //desk
-	items[23].item(32,noun[30],false,false, false); //coat
+    items[1].item(46,noun[1],true,true); // painting
+    items[2].item(38,noun[2],false,true); // ring
+    items[3].item(35,noun[3],true,true); //book of spells
+    items[4].item(50,noun[4],true,true); //goblet
+    items[5].item(13,noun[5],true,true); //scroll
+    items[6].item(18,noun[6],true,true); // coins
+    items[7].item(28,noun[7],true,true); //statue
+    items[8].item(42,noun[8],true,true); //candlestick
+    items[9].item(10,noun[9],true,true); // matches
+    items[10].item(25,noun[10],true,true); // vacuum
+    items[11].item(26,noun[11],true,true); // batteries
+    items[12].item(4,noun[12],true,true); //shovel
+    items[13].item(2,noun[13],true,true); //axe
+    items[14].item(7,noun[14],true,true); //rope
+    items[15].item(47,noun[15],true,true); //boat
+    items[16].item(60,noun[16],true,true); //aerosol
+    items[17].item(43,noun[17],false,true); //candle
+    items[18].item(32,noun[18],false,true); //key
+    items[19].item(13,noun[26],true, false); //bats
+    items[20].item(52,noun[27],true, false);//ghosts
+    items[21].item(43,noun[28],false, false); //drawer
+    items[22].item(43,noun[29],false, false); //desk
+	items[23].item(32,noun[30],false, false); //coat
 
 }
 void MyGame::initializeRooms()
@@ -1070,5 +1089,17 @@ void MyGame::render(const ASGE::GameTime &us)
 						 20, 390, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(current_desc,
 						 400, 200, 1.0, ASGE::COLOURS::LIGHTSLATEGRAY);
+
+//	for (int i = 0;i<7;i++)
+//	{
+//        if (specialItems[i].isVisible())
+//        {
+//            renderer->renderSprite(*specialItems[i].spriteComponent()->getSprite());
+//        }
+//    }
+        if (specialItems[0].isVisible())
+        {
+            renderer->renderSprite(*specialItems[0].spriteComponent()->getSprite());
+        }
 }
 

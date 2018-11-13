@@ -24,7 +24,21 @@ public:
 	void render(const ASGE::GameTime& us) override;
 private:
     const int ROW = 8;
-	int current_room = 30;
+    const float OBJ_X = 50;
+    const float OBJ_Y = 60;
+    const int STR_POS_X = 500;
+    const int STR_POS_Y = 400;
+	int current_room = 57;
+    int increment = 100;
+    GameObject specialItems[7];
+	GameObject painting;
+	GameObject ring;
+	GameObject book;
+	GameObject goblet;
+	GameObject scroll;
+	GameObject coins;
+	GameObject statue;
+	GameObject Candlestick;
 
 	void initializeRooms();
 	void initializeItems();
