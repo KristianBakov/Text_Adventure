@@ -34,6 +34,7 @@ bool MyGame::init()
 
 	renderer->setWindowTitle("The Haunted House");
 	renderer->setClearColour(ASGE::COLOURS::BLACK);
+	//creates the map
 	initializeRooms();
 	initializeItems();
 
@@ -46,7 +47,7 @@ bool MyGame::init()
 	mouse_callback_id = inputs->addCallbackFnc(
 		ASGE::E_MOUSE_CLICK, &MyGame::clickHandler, this);
 
-
+	//set up of the sprite render positions
 	for (int i=0; i<8; i++)
     {
         if (!specialItems[i].addSpriteComponent(renderer.get(),
@@ -128,6 +129,7 @@ void MyGame::goNorth()
 		{
 			candle_life--;
 		}
+		//adds an exception case
         if (current_room == 41)
         {
             room[current_room].setDesc("You have entered the house.\n The door behind you has shut.");
@@ -351,7 +353,7 @@ void MyGame::keyHandler(const ASGE::SharedEventData data)
 	if (key->key == ASGE::KEYS::KEY_ENTER &&key->action == ASGE::KEYS::KEY_RELEASED)
 	{
 		enter_pressed = false;
-}
+    }
 }
 
 void MyGame::clickHandler(const ASGE::SharedEventData data)
@@ -361,11 +363,14 @@ void MyGame::clickHandler(const ASGE::SharedEventData data)
 	inputs->getCursorPos(x_pos, y_pos);
 	mouse_cursor.x = static_cast<float>(x_pos);
 	mouse_cursor.y = static_cast<float>(y_pos);
+	//end game exit case
 	if (click->button == 0 && click->action == 1 && game_won)
 	{
 		signalExit();
 	}
 }
+//inputs capitals for each valid letter
+//adds constraint to what can be typed
 void MyGame::inputText(const ASGE::KeyEvent *key)
 {
 	if(key->key == ASGE::KEYS::KEY_A &&key->action == ASGE::KEYS::KEY_PRESSED)
@@ -481,6 +486,7 @@ void MyGame::inputText(const ASGE::KeyEvent *key)
         input.pop_back();
     }
 }
+//checks each verb for corresponding noun
 void MyGame::checkNoun(int v)
 {
 	// v represents verb number from the verb string.
@@ -497,7 +503,7 @@ void MyGame::checkNoun(int v)
 		feedback.clear();
 		for (int i=1;i<VERB_COUNT;i++)
 		{
-			feedback.append(verb[i] + ",");
+			feedback.append(verb[i] + ", ");
 			if (i % 6 == 0)
 			{
 				feedback.append("\n");
@@ -911,6 +917,7 @@ void MyGame::checkNoun(int v)
 void MyGame::update(const ASGE::GameTime &us)
 {
 	current_desc = room[current_room].getDesc();
+
 	//Look at the first word and match it to the second; if not found, display error;
 	found_verb = false;
 	for (int i = 0; i < VERB_COUNT; i++)
@@ -1021,7 +1028,7 @@ void MyGame::update(const ASGE::GameTime &us)
 			room[52].setNorth(true);
 		}
 	}
-	//boat login
+	//boat logic
 	if (items[15].isInInventory() && !((current_room == 54) || (current_room == 55)
 	|| (current_room == 47) || (current_room == 39) || (current_room == 31) ||
 			(current_room == 23) || (current_room == 15)))
@@ -1068,13 +1075,21 @@ void MyGame::update(const ASGE::GameTime &us)
 
 void MyGame::render(const ASGE::GameTime &us)
 {
+    //adds font
 	ASGE::FILEIO::File font;
-	font.open("/Resources/Fonts/retro.ttf", ASGE::FILEIO::File::IOMode::READ);
+	if (!font.open("/Resources/Fonts/retro.ttf",
+	        ASGE::FILEIO::File::IOMode::READ))
+    {
+	    signalExit();
+    }
 	ASGE::FILEIO::IOBuffer buffer(font.read());
 	font.write(buffer);
-	auto idx = renderer->loadFontFromMem("retro", buffer.as_unsigned_char(), static_cast<unsigned int>(buffer.length), 18);
+	auto idx = renderer->loadFontFromMem("retro",
+	        buffer.as_unsigned_char(), static_cast<unsigned int>
+	        (buffer.length), 24);
 	renderer->setFont(idx);
-	
+
+	//renders strings
 	renderer->renderText("The Haunted House Remastered",
 		20, 150, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText("Your Location",
@@ -1082,21 +1097,22 @@ void MyGame::render(const ASGE::GameTime &us)
 	renderer->renderText("Exits:",
 		20, 240, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText("Special items collected:",
-						 400, 340, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	        400, 340, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(item_string,
-						 20, 410, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	        20, 410, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(room[current_room].getName(),
-						 20, 210, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	        20, 210, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(exits,
-						 100, 240, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	        100, 240, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(input,
-						 20, 270, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	        20, 270, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(input_copy,
-						 20, 300, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	        20, 300, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(feedback,
-						 20, 390, 1.0, ASGE::COLOURS::LIGHTGREEN);
+	        20, 390, 1.0, ASGE::COLOURS::LIGHTGREEN);
 	renderer->renderText(current_desc,
-						 400, 200, 1.0, ASGE::COLOURS::LIGHTSLATEGRAY);
+	        400, 200, 1.0, ASGE::COLOURS::LIGHTSLATEGRAY);
+	//renders sprites
 	for (auto &specialItem : specialItems)
 	{
         if (specialItem.isVisible())
