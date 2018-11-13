@@ -794,7 +794,6 @@ void MyGame::checkNoun(int v)
 			if (current_room == 7 && current_noun == "TREE")
 			{
 				feedback.assign("CLIMBED UP. YOU CAN SEE FOREST TO THE WEST AND CLIFFS TO THE SOUTH.");
-				on_tree = true;
 			}
 			else
 			{
