@@ -1,13 +1,8 @@
 #include <utility>
-
 //
-// Created by Huxy on 03/10/2018.
+// Haunted House Remastered by Kristian Bakov 13/11/18
 //
-
 #include <iostream>
-#include "MyGame.h"
-#include "Rooms.h"
-#include "Items.h"
 #include <Engine\Renderer.h>
 #include "GameObject.h"
 #include <Engine/DebugPrinter.h>
@@ -17,6 +12,9 @@
 #include <Engine/Platform.h>
 #include <Engine/Sprite.h>
 #include <Engine/FileIO.h>
+#include "MyGame.h"
+#include "Rooms.h"
+#include "Items.h"
 
 MyGame::MyGame() = default;
 
@@ -35,11 +33,16 @@ bool MyGame::init()
 
 
 //    ASGE::FILEIO::File font;
-//    ASGE::FILEIO::IOBuffer buffer;
 //    font.open("/Resources/Fonts/retro.ttf", ASGE::FILEIO::File::IOMode::READ);
-//    auto idx = renderer->loadFontFromMem("retro", buffer.as_unsigned_char(),
-//                                        static_cast<unsigned int>(buffer.length), 18);
+//    ASGE::FILEIO::IOBuffer buffer(font.read());
+//    auto idx = renderer->loadFontFromMem("retro", buffer.as_unsigned_char(),buffer.length, 18);
 //    renderer->setFont(idx);
+
+for (int i = 1;i <19;i++)
+{
+	items[i].setInInventory(true);
+	items[15].setInInventory(false);
+}
 
 	renderer->setWindowTitle("The Haunted House");
 	renderer->setClearColour(ASGE::COLOURS::BLACK);
@@ -652,6 +655,10 @@ void MyGame::checkNoun(int v)
 		{
 			feedback = "THAT'S CREEPY! BUT IT LOOKS LIKE IT CAN BE OPENED.";
 		}
+		else
+		{
+			feedback.assign("EXAMINE WHAT?");
+		}
     }
     //verb OPEN
     else if (v == 13)
@@ -676,6 +683,10 @@ void MyGame::checkNoun(int v)
 			feedback.assign("ALL THAT IS LEFT INSIDE ARE ASHES AND A DIAMOND RING.");
 			items[2].setVisibe(true);
 		}
+		else
+		{
+			feedback.assign("OPEN WHAT?");
+		}
 	}
 	//verb READ
 	else if (v == 14)
@@ -691,6 +702,10 @@ void MyGame::checkNoun(int v)
 		else if (current_noun == noun[5] && items[5].isInInventory())
 		{
 			feedback.assign("THE SCRIPT IS IN AN ALIEN TONGUE");
+		}
+		else
+		{
+			feedback.assign("READ WHAT?");
 		}
 	}
 	//verb SAY
@@ -717,6 +732,8 @@ void MyGame::checkNoun(int v)
 				input_copy.clear();
 				room[31].setDesc("You dug the bars out and escaped to the east."
                      "\n You are in a mountainous area outside the house.");
+				room[30].setName("Open Celler");
+				room[30].setDesc("You dug the iron bars to the east and\n found an exit.");
 				room[30].setEast(true);
 				room[31].setWest(true);
 				current_room++;
@@ -746,6 +763,10 @@ void MyGame::checkNoun(int v)
 			{
 				feedback.assign("WHOOSH!");
 			}
+		}
+		else
+		{
+			feedback.assign("SWING WHAT?");
 		}
 	}
 	//verb CLIMB
@@ -787,6 +808,10 @@ void MyGame::checkNoun(int v)
 				feedback.assign("NOTHING TO LIGHT IT WITH.");
 			}
 		}
+		else
+		{
+			feedback.assign("LIGHT WHAT?");
+		}
 	}
 	//verb UNLIGHT
 	else if (v == 20)
@@ -795,6 +820,10 @@ void MyGame::checkNoun(int v)
 		{
 			candle_lit = false;
 			feedback.assign("EXTINGUISHED");
+		}
+		else if (!candle_lit && feedback != "EXTINGUISHED")
+		{
+			feedback.assign("UNLIGHT WHAT?");
 		}
 	}
 	//verb UNLOCK
@@ -808,6 +837,10 @@ void MyGame::checkNoun(int v)
 			room[28].setDesc("A passage with a wooden door which you unlocked.");
 			room[28].setName("Hall with Open Door");
 		}
+		else if (current_room != 28)
+		{
+			feedback.assign("UNLOCK WHAT?");
+		}
 	}
 	//verb LEAVE
 	else if (v == 24)
@@ -817,17 +850,16 @@ void MyGame::checkNoun(int v)
 		{
 			is_paralyzed = false;
 		}
-		for (int i = 0; i < ITEM_COUNT; i++)
-		{
-			if (current_noun == items[i].getName() && items[i].isInInventory())
+		for (auto &item : items) {
+			if (current_noun == item.getName() && item.isInInventory())
 			{
-				feedback.assign("YOU LEFT " + items[i].getName());
-				items[i].setInInventory(false);
-				items[i].setVisibe(true);
-				items[i].setItemRoom(current_room);
+				feedback.assign("YOU LEFT " + item.getName());
+				item.setInInventory(false);
+				item.setVisibe(true);
+				item.setItemRoom(current_room);
 				item_string.clear();
 				room[current_room].setHasItem(true);
-				items[i].setItemRoom(current_room);
+				item.setItemRoom(current_room);
                 break;
 			}
 		}
@@ -838,9 +870,9 @@ void MyGame::checkNoun(int v)
 		//display score
 		std::string score_str = "SCORE: " + std::to_string(current_score);
 		int num_items_in_inv = 0;
-		for (int i=0;i<ITEM_COUNT;i++)
+		for (auto &item : items)
 		{
-			if (items[i].isInInventory())
+			if (item.isInInventory())
 			{
 				num_items_in_inv++;
 			}
@@ -857,7 +889,7 @@ void MyGame::checkNoun(int v)
 		}
 		if (current_score == 34 && current_room == 57)
 		{
-			feedback.assign("YOU WERE ABLE TO ESCAPE SUCCESSFULY! CONGRATULATIONS!");
+			feedback.assign("YOU WERE ABLE TO ESCAPE SUCCESSFULLY! CONGRATULATIONS!");
 			item_string.assign("PRESS ENTER TO EXIT.");
 			if (enter_pressed)
 			{
@@ -869,6 +901,21 @@ void MyGame::checkNoun(int v)
 
 void MyGame::update(const ASGE::GameTime &us) {
 	current_desc = room[current_room].getDesc();
+	//Look at the first word and match it to the second; if not found, display error;
+	found_verb = false;
+	for (int i = 0; i < VERB_COUNT; i++)
+	{
+		if (current_verb == verb[i])
+		{
+			found_verb = true;
+			checkNoun(i);
+			break;
+		}
+	}
+	if (!found_verb)
+	{
+		feedback = "ENTER A VALID KEYWORD. 'HELP' FOR LIST OF KEYWORDS.";
+	}
 	// updates the exits that are displayed when entering a new room
 	if (room_updated)
 	{
@@ -901,6 +948,40 @@ void MyGame::update(const ASGE::GameTime &us) {
             exits.append("|D| ");
         }
 	}
+	//bats logic
+	if (current_room == 13 && items[19].isVisible())
+	{
+		room[13].setWest(false);
+		current_room = 13;
+		is_paralyzed = true;
+		feedback = "YOU HAVE BEEN ATTACKED BY BATS! YOU ARE PARALYZED AND CANNOT MOVE.";
+		if (current_verb == verb[21] && items[16].isInInventory()
+			&& (current_noun == noun[16] || current_noun == noun[26]))
+		{
+			is_paralyzed = false;
+			feedback = "THE BATS UNLEASH A HORRIFYING SCREAM AND FALL ON THE GROUND.";
+			items[19].setVisibe(false);
+			room[13].setWest(true);
+		}
+	}
+	//ghosts logic
+	if (current_room == 52 && items[20].isVisible())
+	{
+		room[52].setWest(false);
+		room[52].setNorth(false);
+		current_room = 52;
+		is_paralyzed = true;
+		feedback = "YOU HAVE BEEN ATTACKED BY SPOOKY GHOSTS! YOU ARE PARALYZED AND CANNOT MOVE.";
+		if (current_verb == verb[22] && items[10].isInInventory()
+			&& items[11].isInInventory() && current_noun == noun[10])
+		{
+			is_paralyzed = false;
+			feedback = "THE GHOSTS HAVE BEEN SUCKED UP!";
+			items[20].setVisibe(false);
+			room[52].setWest(true);
+			room[52].setNorth(true);
+		}
+	}
 	//boat login
 	if (items[15].isInInventory() && !((current_room == 54) || (current_room == 55)
 	|| (current_room == 47) || (current_room == 39) || (current_room == 31) ||
@@ -931,40 +1012,6 @@ void MyGame::update(const ASGE::GameTime &us) {
 			feedback = "YOUR CANDLE RUNS OUT!";
 		}
 	}
-	//bats logic
-	if (current_room == 13 && items[19].isVisible())
-    {
-		room[13].setWest(false);
-        current_room = 13;
-        is_paralyzed = true;
-        feedback = "YOU HAVE BEEN ATTACKED BY BATS! YOU ARE PARALYZED AND CANNOT MOVE.";
-        if (current_verb == verb[21] && items[16].isInInventory()
-        && (current_noun == noun[16] || current_noun == noun[26]))
-		{
-        	is_paralyzed = false;
-			feedback = "THE BATS UNLEASH A HORRIFYING SCREAM AND FALL ON THE GROUND.";
-        	items[19].setVisibe(false);
-        	room[13].setWest(true);
-		}
-    }
-    //ghosts logic
-    if (current_room == 52 && items[20].isVisible())
-    {
-    	room[52].setWest(false);
-    	room[52].setNorth(false);
-        current_room = 52;
-        is_paralyzed = true;
-        feedback = "YOU HAVE BEEN ATTACKED BY SPOOKY GHOSTS! YOU ARE PARALYZED AND CANNOT MOVE.";
-        if (current_verb == verb[22] && items[10].isInInventory()
-        && items[11].isInInventory() && current_noun == noun[10])
-		{
-        	is_paralyzed = false;
-        	feedback = "THE GHOSTS HAVE BEEN SUCKED UP!";
-			items[20].setVisibe(false);
-        	room[52].setWest(true);
-        	room[52].setNorth(true);
-		}
-    }
     //magical barrier
 	if (current_room == 45 && items[1].isInInventory() && magic_barrier)
 	{
@@ -981,12 +1028,12 @@ void MyGame::update(const ASGE::GameTime &us) {
 	//displays items in the room
 	if (room[current_room].getItems())
 	{
-       	for (int i =0;i <ITEM_COUNT;i++)
-		{
-       		if (current_room == items[i].getItemRoom() && items[i].isVisible()
-       		&& !items[i].isInInventory() && items[i].isGettable())
+       	for (auto &item : items)
+       	{
+       		if (current_room == item.getItemRoom() && item.isVisible()
+       		&& !item.isInInventory() && item.isGettable())
 			{
-       			item_string.assign("YOU CAN SEE " + items[i].getName());
+       			item_string.assign("YOU CAN SEE " + item.getName());
        			break;
 			}
 		}
@@ -995,34 +1042,6 @@ void MyGame::update(const ASGE::GameTime &us) {
 	{
 		item_string.assign("");
 	}
-
-    //Look at the first word and match it to the second; if not found, display error;
-    found_verb = false;
-	found_noun = false;
-	for (int i = 0; i < VERB_COUNT; i++)
-	{
-		if (current_verb == verb[i])
-		{
-			found_verb = true;
-			checkNoun(i);
-			break;
-		}
-	}
-//	for (const auto &j : noun) {
-//		if (current_noun == j && !found_verb)
-//		{
-//			found_noun = true;
-//			break;
-//		}
-//	}
-//	if (!found_noun)
-//	{
-//		feedback.assign(current_verb + " WHAT?");
-//	}
-    if (!found_verb)
-    {
-        feedback = "ENTER A VALID KEYWORD. 'HELP' FOR LIST OF KEYWORDS.";
-    }
 }
 
 void MyGame::render(const ASGE::GameTime &us)

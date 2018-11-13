@@ -24,7 +24,7 @@ public:
 	void render(const ASGE::GameTime& us) override;
 private:
     const int ROW = 8;
-	int current_room = 57;
+	int current_room = 30;
 
 	void initializeRooms();
 	void initializeItems();
@@ -44,7 +44,6 @@ private:
 	bool room_updated = true;
 	bool is_paralyzed = false;
     bool found_verb = false;
-    bool found_noun = false;
     bool door_locked = true;
     bool magic_barrier = true;
     bool on_tree = false;
