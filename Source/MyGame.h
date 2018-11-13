@@ -44,11 +44,13 @@ private:
 	bool room_updated = true;
 	bool is_paralyzed = false;
     bool found_verb = false;
+    bool found_noun = false;
     bool door_locked = true;
     bool magic_barrier = true;
     bool on_tree = false;
     bool candle_lit = false;
     int candle_life = 45;
+    int current_score = 0;
 
     static constexpr int ITEM_COUNT = 24;
 	Items items[ITEM_COUNT];
