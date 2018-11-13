@@ -23,12 +23,13 @@ public:
 	void update(const ASGE::GameTime& us) override;
 	void render(const ASGE::GameTime& us) override;
 private:
+    static constexpr int ITEM_COUNT = 24;
+    static constexpr int VERB_COUNT = 26;
     const int ROW = 8;
     const float OBJ_X = 50;
     const float OBJ_Y = 60;
 	int current_room = 57;
     int increment = 100;
-    GameObject specialItems[8];
 
 	void initializeRooms();
 	void initializeItems();
@@ -41,8 +42,6 @@ private:
     void goWest();
     void goSouth();
     void goNorth();
-	int key_callback_id = -1;	        /**< Key Input Callback ID. */
-	int  mouse_callback_id = -1;        /**< Mouse Input Callback ID. */
 
 	bool enter_pressed = false;
 	bool room_updated = true;
@@ -51,17 +50,15 @@ private:
     bool door_locked = true;
     bool magic_barrier = true;
     bool game_won = false;
-    bool on_tree = false;
     bool candle_lit = false;
+    int key_callback_id = -1;
+    int  mouse_callback_id = -1;
     int candle_life = 45;
     int current_score = 0;
 
-    static constexpr int ITEM_COUNT = 24;
-    static constexpr int ROOM_COUNT = 64;
-    static constexpr int VERB_COUNT = 26;
-    static constexpr  int NOUN_COUNT = 31;
-	Items items[ITEM_COUNT];
-	Rooms room[ROOM_COUNT];
+    GameObject specialItems[8];
+	Items items[24];
+	Rooms room[64];
 	std::string input;
 	std::string current_verb = "";
 	std::string current_noun;
@@ -72,7 +69,7 @@ private:
 	std::string verb[VERB_COUNT] = {"","HELP","INVENTORY","GO","N","S","W","E","U","D","GET",
                          "TAKE","EXAMINE","OPEN","READ","SAY","DIG","SWING","CLIMB",
                          "LIGHT","UNLIGHT","SPRAY","USE","UNLOCK","LEAVE","SCORE"};
-	std::string noun[NOUN_COUNT] = {"","PAINTING","RING","SPELLS","GOBLET","SCROLLS",
+	std::string noun[31] = {"","PAINTING","RING","SPELLS","GOBLET","SCROLL",
                          "COINS","STATUE","CANDLESTICK","MATCHES","VACUUM",
                          "BATTERIES","SHOVEL","AXE","ROPE","BOAT","AEROSOL","CANDLE",
                          "KEY","NORTH","SOUTH","WEST","EAST","UP","DOWN","DOOR","BATS",
@@ -81,6 +78,5 @@ private:
 	std::string item_string;
 	rect mouse_cursor;
 };
-
 
 #endif //HELLOASGE_MYGAME_H

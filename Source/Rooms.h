@@ -11,8 +11,8 @@
 class Rooms {
 
 public:
-
-    void room(bool n, bool s, bool e, bool w, bool u, bool d, std::string name, std::string desc,bool i,bool dark);
+    void room(bool n, bool s, bool e, bool w, bool u, bool d,
+            std::string name, std::string desc,bool i,bool dark);
     bool getNorth();
     bool getSouth();
     bool getWest();
@@ -33,7 +33,6 @@ public:
     void setName(std::string in);
 
 private:
-
     bool north = false;
     bool south = false;
     bool east = false;

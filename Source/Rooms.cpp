@@ -11,7 +11,8 @@
 #include "Rooms.h"
 #include <string>
 
-void Rooms::room(bool n, bool s, bool e, bool w, bool u, bool d, std::string na, std::string de, bool i,bool dark)
+void Rooms::room(bool n, bool s, bool e, bool w, bool u, bool d,
+        std::string na, std::string de, bool i,bool dark)
 {
     north = n;
     south = s;
