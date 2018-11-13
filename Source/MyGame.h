@@ -26,19 +26,9 @@ private:
     const int ROW = 8;
     const float OBJ_X = 50;
     const float OBJ_Y = 60;
-    const int STR_POS_X = 500;
-    const int STR_POS_Y = 400;
 	int current_room = 57;
     int increment = 100;
-    GameObject specialItems[7];
-	GameObject painting;
-	GameObject ring;
-	GameObject book;
-	GameObject goblet;
-	GameObject scroll;
-	GameObject coins;
-	GameObject statue;
-	GameObject Candlestick;
+    GameObject specialItems[8];
 
 	void initializeRooms();
 	void initializeItems();
@@ -60,14 +50,17 @@ private:
     bool found_verb = false;
     bool door_locked = true;
     bool magic_barrier = true;
+    bool game_won = false;
     bool on_tree = false;
     bool candle_lit = false;
     int candle_life = 45;
     int current_score = 0;
 
     static constexpr int ITEM_COUNT = 24;
+    static constexpr int ROOM_COUNT = 64;
+    static constexpr int VERB_COUNT = 26;
+    static constexpr  int NOUN_COUNT = 31;
 	Items items[ITEM_COUNT];
-	static constexpr int ROOM_COUNT = 64;
 	Rooms room[ROOM_COUNT];
 	std::string input;
 	std::string current_verb = "";
@@ -76,12 +69,9 @@ private:
 	std::string input_copy;
 	std::string feedback;
     std::size_t found_space = 0;
-    static constexpr int VERB_COUNT = 26;
-
 	std::string verb[VERB_COUNT] = {"","HELP","INVENTORY","GO","N","S","W","E","U","D","GET",
                          "TAKE","EXAMINE","OPEN","READ","SAY","DIG","SWING","CLIMB",
                          "LIGHT","UNLIGHT","SPRAY","USE","UNLOCK","LEAVE","SCORE"};
-	static constexpr  int NOUN_COUNT = 31;
 	std::string noun[NOUN_COUNT] = {"","PAINTING","RING","SPELLS","GOBLET","SCROLLS",
                          "COINS","STATUE","CANDLESTICK","MATCHES","VACUUM",
                          "BATTERIES","SHOVEL","AXE","ROPE","BOAT","AEROSOL","CANDLE",
@@ -89,8 +79,6 @@ private:
                          "GHOSTS","DRAWER","DESK","COAT"};
 	std::string exits;
 	std::string item_string;
-	std::string description;
-
 	rect mouse_cursor;
 };
 
