@@ -60,21 +60,27 @@ for (int i = 1;i <19;i++)
 	//	ASGE::E_MOUSE_CLICK, &MyGame::clickHandler, this);
 
 
-    if (!specialItems[0].addSpriteComponent(renderer.get(), "Resources/item0.png"))
+	for (int i=0; i<7; i++)
     {
-        return false;
+        if (!specialItems[i].addSpriteComponent(renderer.get(),
+                "Resources/item"+std::to_string(i)+".png")) {
+            return false;
+        }
+        specialItems[i].spriteComponent()->getSprite()->width(OBJ_X);
+        specialItems[i].spriteComponent()->getSprite()->height(OBJ_Y);
+        specialItems[i].spriteComponent()->getSprite()->yPos(500);
     }
-//	for (int i=0; i<7; i++)
-//    {
-//        if (!specialItems[i].addSpriteComponent(renderer.get(),
-//                "Resources/item"+std::to_string(i)+".png")) {
-//            return false;
-//        }
-//        specialItems[i].spriteComponent()->getSprite()->width(OBJ_X);
-//        specialItems[i].spriteComponent()->getSprite()->height(OBJ_Y);
-//        specialItems[i].spriteComponent()->getSprite()->xPos(STR_POS_X);
-//        specialItems[i].spriteComponent()->getSprite()->yPos(STR_POS_Y);
-//    }
+    for (int i = 0, m = 0; i < 7; i++)
+    {
+
+        specialItems[i].spriteComponent()->getSprite()->xPos(500 +i*increment);
+        if (i >= 3)
+        {
+            m++;
+            specialItems[i].spriteComponent()->getSprite()->xPos(500 + m * increment);
+            specialItems[i].spriteComponent()->getSprite()->yPos(specialItems[i-m].spriteComponent()->getSprite()->yPos() + increment);
+        }
+    }
 
 	return true;
 }
@@ -1090,16 +1096,12 @@ void MyGame::render(const ASGE::GameTime &us)
 	renderer->renderText(current_desc,
 						 400, 200, 1.0, ASGE::COLOURS::LIGHTSLATEGRAY);
 
-//	for (int i = 0;i<7;i++)
-//	{
-//        if (specialItems[i].isVisible())
-//        {
-//            renderer->renderSprite(*specialItems[i].spriteComponent()->getSprite());
-//        }
-//    }
-        if (specialItems[0].isVisible())
+	for (int i = 0;i<7;i++)
+	{
+        if (specialItems[i].isVisible())
         {
-            renderer->renderSprite(*specialItems[0].spriteComponent()->getSprite());
+            renderer->renderSprite(*specialItems[i].spriteComponent()->getSprite());
         }
+    }
 }
 
