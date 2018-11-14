@@ -915,8 +915,12 @@ void MyGame::checkNoun(int v)
 
 void MyGame::update(const ASGE::GameTime &us)
 {
+    //limit player input length
 	current_desc = room[current_room].getDesc();
-
+	if (input.size() >= 25)
+    {
+	    input.pop_back();
+    }
 	//Look at the first word and match it to the second; if not found, display error;
 	found_verb = false;
 	for (int i = 0; i < VERB_COUNT; i++)

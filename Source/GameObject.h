@@ -9,7 +9,6 @@
 #pragma once
 #include <string>
 #include "SpriteComponent.h"
-#include "Vector2.h"
 
 /**
 *  Objects used throughout the game.
@@ -54,24 +53,11 @@ public:
 
     void setVisible(bool vis_in);
 
-    int getSpeed();
-
-    void setSpeed(int speed_in);
-
-    vector2 getVelocity();
-
-    void setVelocity(float x, float y);
-
-    int getGravity();
-
 private:
 
     void freeSpriteComponent();
     SpriteComponent* sprite_component = nullptr;
     /*visibility of the object, default = true*/ bool visibility = true;
-    /*speed of the velocity vector*/ int speed = 500;
-    /*velocity vector with x and y*/ vector2 velocity{ 0,0 };
-    /*Gravity const*/ const float gravity = 9.8f;
 };
 
 #endif //BASICREB0RN_GAMEOBJECT_H
